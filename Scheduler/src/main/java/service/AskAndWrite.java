@@ -57,26 +57,16 @@ public class AskAndWrite {
 	private static Vector<City> getCities() {
 		Vector<City> ListaCittà = new Vector<City>();
 		try {
-				City città = new City(0,null);
 				JSONParser parser = new JSONParser();
 				JSONArray a = (JSONArray) parser.parse(new FileReader (fileName));
-				/*for (Object o : a) {
+				for (Object o : a) {
 					JSONObject obj = (JSONObject) o;
-					città.setId((long)obj.get("id"));
-					città.setName((String)obj.get("name"));
-					ListaCittà.addElement(città);
-				}*/
-				for (int i=0;i<a.size();i++) {
-					JSONObject obj = (JSONObject) a.get(i);
-					città.setId((long)obj.get("id"));
-					città.setName((String)obj.get("name"));
-					ListaCittà.addElement(città);
+					ListaCittà.addElement(new City((long)obj.get("id"),(String)obj.get("name")));
 				}
 		} catch (IOException | ParseException e) {
-			System.out.println("File non trovato");
+			System.out.println("ERRORE");
 			e.printStackTrace();
 		} 
-		System.out.println(ListaCittà);
 		return ListaCittà;
 	}
 }

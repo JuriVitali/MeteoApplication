@@ -12,8 +12,8 @@ import service.AskAndWrite;
 public class SchedulerApplication {
 
 	public static void main(String[] args) {
-		//AskAndWrite.askAndWrite();
-		SpringApplication.run(SchedulerApplication.class);
+		AskAndWrite.askAndWrite();
+		//SpringApplication.run(SchedulerApplication.class);
 	}
 
 }
