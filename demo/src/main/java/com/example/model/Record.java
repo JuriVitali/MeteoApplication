@@ -1,21 +1,41 @@
-package model;
+package com.example.model;
 
-public class Record extends City{
+public class Record {
+	private String name;
+	private long id;
 	private double temperature;
 	private double tempPer;
 	private double tempMax;
 	private double tempMin;
 	
 	//costruttore
-	public Record(long id, String name, double temperature, double tempPer, double tempMax, double tempMin) {
-		super(id, name);
+	public Record(String name, long id, double temperature, double tempPer, double tempMax, double tempMin) {
+		super();
+		this.name = name;
+		this.id = id;
 		this.temperature = temperature;
 		this.tempPer = tempPer;
 		this.tempMax = tempMax;
 		this.tempMin = tempMin;
 	}
-
+	
 	//getters e setters
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
 	public double getTemperature() {
 		return temperature;
 	}
@@ -47,6 +67,4 @@ public class Record extends City{
 	public void setTempMin(double tempMin) {
 		this.tempMin = tempMin;
 	}
-	
-	
 }
