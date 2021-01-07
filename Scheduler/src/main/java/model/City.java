@@ -1,10 +1,10 @@
 package model;
 
 public class City {
-	private String id;
+	private long id;
 	private String name;
 	
-	public City(String id, String name) {
+	public City(long id, String name) {
 		this.id = id;
 		this.name = name;
 	}
@@ -18,11 +18,17 @@ public class City {
 		this.name = name;
 	}
 
-	public String getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(long id) {
 		this.id = id;
+	}
+
+	public String toString() {
+		return "City [id=" + id + ", name=" + name + "]";
 	}	
+	
+	
 }

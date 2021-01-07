@@ -8,7 +8,7 @@ public class ManageData {
 	
 	public static Vector<Metadata> getMetadata() {
 		mymetadata.add(new Metadata("name","Nome della città","String"));
-		mymetadata.add(new Metadata("id","Codice identificativo della città","int"));
+		mymetadata.add(new Metadata("id","Codice identificativo della città","long"));
 		mymetadata.add(new Metadata("temperature","temperatura","double"));
 		mymetadata.add(new Metadata("tempPer","Temperatura percepita","double"));
 		mymetadata.add(new Metadata("tempMax","Temperatura massima registrata in un dato momento all'interno della città","double"));

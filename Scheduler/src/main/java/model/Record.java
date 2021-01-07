@@ -7,7 +7,7 @@ public class Record extends City{
 	private double tempMin;
 	
 	//costruttore
-	public Record(String id, String name, double temperature, double tempPer, double tempMax, double tempMin) {
+	public Record(long id, String name, double temperature, double tempPer, double tempMax, double tempMin) {
 		super(id, name);
 		this.temperature = temperature;
 		this.tempPer = tempPer;

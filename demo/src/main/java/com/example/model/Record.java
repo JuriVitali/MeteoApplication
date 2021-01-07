@@ -2,14 +2,14 @@ package com.example.model;
 
 public class Record {
 	private String name;
-	private int id;
+	private long id;
 	private double temperature;
 	private double tempPer;
 	private double tempMax;
 	private double tempMin;
 	
 	//costruttore
-	public Record(String name, int id, double temperature, double tempPer, double tempMax, double tempMin) {
+	public Record(String name, long id, double temperature, double tempPer, double tempMax, double tempMin) {
 		super();
 		this.name = name;
 		this.id = id;
@@ -28,11 +28,11 @@ public class Record {
 		this.name = name;
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
