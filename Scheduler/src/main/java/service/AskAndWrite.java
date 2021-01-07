@@ -18,7 +18,7 @@ import org.json.simple.parser.ParseException;
 
 public class AskAndWrite {
 
-	private static String fileName="C:\\Users\\juriv\\git\\RepositoryProgettoEsame\\Scheduler\\src\\main\\java\\service\\CitiesList.txt";
+	private static String fileName="C:\\Users\\S3B4\\git\\Progetto-esame-OOP\\Scheduler\\src\\main\\java\\service\\CitiesList.txt";
 	
 	//esegue una chiamata ad OpenWeather per ogni città nella lista
 	public static void askAndWrite () {
@@ -53,7 +53,7 @@ public class AskAndWrite {
 	}
 	
 	//Legge da un file in formato JSON la lista delle città e popola un vettore di City
-	//Si può anche far eseguire una volta sola come prima istruzione quando parte lo schedulatore sennza esguirlo ogni volta
+	//Si può anche far eseguire una volta sola come prima istruzione quando parte lo schedulatore senza esguirlo ogni volta
 	private static Vector<City> getCities() {
 		Vector<City> ListaCittà = new Vector<City>();
 		try {

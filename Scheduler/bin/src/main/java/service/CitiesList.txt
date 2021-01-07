@@ -1,0 +1,42 @@
+[
+    {
+        "id": 3183089,
+        "name": "Ancona"
+    },
+    {
+        "id": 6541461,
+        "name": "Modena"
+    },
+    {
+        "id": 6541462,
+        "name": "Rieti"
+    },
+    {
+        "id": 6541463,
+        "name": "Crotone"
+    },
+    {
+        "id": 6541464,
+        "name": "Alessandria"
+    },
+    {
+        "id": 6541465,
+        "name": "Vicenza"
+    },
+    {
+        "id": 6541466,
+        "name": "Siena"
+    },
+    {
+        "id": 6541467,
+        "name": "Cosenza"
+    },
+    {
+        "id": 6541468,
+        "name": "Catania"
+    },
+    {
+        "id": 6541469,
+        "name": "Trento",
+    }
+]
