@@ -1,1 +1,0 @@
-[{"City1":{"TempPerc":-5.9,"Temp":-2.66,"TempMin":-7.22,"TempMax":0.0,"Time":1610104621,"Id":6541469,"Name":"Trento"}},{"City2":{"temp":-2.66,"TempPerc":-5.9,"TempMin":-7.22,"TempMax":0.0,"Time":1610104621,"Id":6541469,"Name":"Trento"}}]

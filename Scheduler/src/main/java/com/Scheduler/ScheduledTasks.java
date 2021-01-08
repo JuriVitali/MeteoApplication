@@ -1,26 +1,26 @@
 package com.Scheduler;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import model.City;
+import service.WeatherService;
+import java.util.Vector;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import service.AskAndWrite;
 
 @Component
 public class ScheduledTasks {
+	private int i=0;
+	private Vector<City> cities;
 	
-	//private static final Logger log = LoggerFactory.getLogger(ScheduledTasks.class);
+	@Autowired
+	WeatherService weatherService;
 	
-	@Scheduled (fixedRate = 5000) //ogni 5 secondi
+	@Scheduled (fixedRate = 15000) //ogni 15 secondi
 	public void ReportData() {
-		
-	    AskAndWrite.parse();
-	    System.out.println();
-	    AskAndWrite.WriteJSONExample();
+		if (i==0) cities=weatherService.getCities((weatherService.download(WeatherService.fileNameCities)));
+		weatherService.parse(cities);	
+		String totalData = weatherService.produceString() + weatherService.download(WeatherService.fileNameData);
+		weatherService.update(totalData, WeatherService.fileNameData);
 	}    
-	/*@Scheduled (fixedRate = 5000) //ogni 5 secondi
-    public void ReportData1() {
-	    
-	}*/
 }
