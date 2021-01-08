@@ -15,6 +15,12 @@ public class ScheduledTasks {
 	@Scheduled (fixedRate = 5000) //ogni 5 secondi
 	public void ReportData() {
 		
-	    AskAndWrite.askAndWrite();
-	}
+	    AskAndWrite.parse();
+	    System.out.println();
+	    AskAndWrite.WriteJSONExample();
+	}    
+	/*@Scheduled (fixedRate = 5000) //ogni 5 secondi
+    public void ReportData1() {
+	    
+	}*/
 }
