@@ -33,7 +33,7 @@ public class AskAndWrite {
 	
 	
 
-	private static String fileName="C:\\Users\\S3B4\\git\\Progetto-esame-OOP\\Scheduler\\src\\main\\java\\service\\CitiesList.txt";
+	private static String fileName="C:\\Users\\juriv\\git\\RepositoryProgettoEsame\\Scheduler\\src\\main\\java\\service\\CitiesList.txt";
 	
 	//esegue una chiamata ad OpenWeather per ogni città nella lista
 	/*public static void askAndWrite () {
@@ -195,3 +195,5 @@ public class AskAndWrite {
 	}
 	
 }
+
+
