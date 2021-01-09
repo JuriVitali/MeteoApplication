@@ -5,14 +5,25 @@ public class Record extends City{
 	private double tempPer;
 	private double tempMax;
 	private double tempMin;
+	private long time;
 	
 	//costruttore
-	public Record(long id, String name, double temperature, double tempPer, double tempMax, double tempMin) {
+	public Record(long id, String name, double temperature, double tempPer, double tempMax, double tempMin , long time) {
 		super(id, name);
 		this.temperature = temperature;
 		this.tempPer = tempPer;
 		this.tempMax = tempMax;
 		this.tempMin = tempMin;
+		this.time=time;
+	}
+	
+	public Record() {
+		super(0, "");
+		temperature=0;
+		tempPer=0;
+		tempMax=0;
+		tempMin=0;
+		time=0;
 	}
 
 	//getters e setters
@@ -46,6 +57,20 @@ public class Record extends City{
 
 	public void setTempMin(double tempMin) {
 		this.tempMin = tempMin;
+	}
+
+	public long getTime() {
+		return time;
+	}
+
+	public void setTime(long time) {
+		this.time = time;
+	}
+
+	@Override
+	public String toString() {
+		return "Record [id= "+ id + " ,name= " + name +",temperature=" + temperature + ", tempPer=" + tempPer + ", tempMax=" + tempMax + ", tempMin="
+				+ tempMin + ", time=" + time + "]";
 	}
 	
 	

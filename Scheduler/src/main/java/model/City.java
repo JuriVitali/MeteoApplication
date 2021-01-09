@@ -1,8 +1,8 @@
 package model;
 
 public class City {
-	private long id;
-	private String name;
+	long id;
+	String name;
 	
 	public City(long id, String name) {
 		this.id = id;
