@@ -136,10 +136,18 @@ public Vector<Record> parse(Vector<City> lista) {
 		result = restTemplate.getForObject("https://api.openweathermap.org/data/2.5/weather?id=" + c.getId() + "&units=metric&appid=cb240c9a23197aad47fd81d2660b6b8a", String.class);
 		try  {
 			obj = (JSONObject) parser.parse(result);
-            JSONObject main = (JSONObject) obj.get("main");
+			long unixSeconds = (long) obj.get("dt");
+			// convert seconds to milliseconds
+			Date date = new Date(unixSeconds*1000L); 
+			// the format of your date
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:00 "); 
+			// give a timezone reference for formatting (see comment at the bottom)
+			sdf.setTimeZone(TimeZone.getTimeZone("GMT-1")); 
+			String formattedDate = sdf.format(date);
+			JSONObject main = (JSONObject) obj.get("main");
 			listData.add(new Record((long) obj.get("id"),(String) obj.get("name"),(Double.parseDouble(main.get("temp").toString())),
 					(Double.parseDouble(main.get("feels_like").toString())),(Double.parseDouble(main.get("temp_max").toString())),
-							(Double.parseDouble(main.get("temp_min").toString())),(long) obj.get("dt")));
+							(Double.parseDouble(main.get("temp_min").toString())),formattedDate));
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -168,18 +176,7 @@ public String produceString(Record r) {
 	         
 	         
 
-public static void ConvertiUnix(long time) {
-		long unixSeconds = 1372339860;
-		// convert seconds to milliseconds
-		Date date = new Date(unixSeconds*1000L); 
-		// the format of your date
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z"); 
-		// give a timezone reference for formatting (see comment at the bottom)
-		sdf.setTimeZone(TimeZone.getTimeZone("GMT-1")); 
-		String formattedDate = sdf.format(date);
-		
-		
-	}
+
 	
 }
 
