@@ -48,11 +48,15 @@ public class ScheduledTasks {
 	@Scheduled (fixedRate = 15000) //ogni 15 secondi
 	public void ReportData() {
 		i++;
+		String totalData = new String();
 		if (i==1) {
 		String s=weatherService.download(WeatherService.fileNameCities);
-		cities=weatherService.getCities(s); 	
+		cities=weatherService.getCities(s);
+		totalData += '[';
 		 }
-		String totalData = '['+weatherService.download(WeatherService.fileNameData);
+		totalData += weatherService.download(WeatherService.fileNameData);
+		//if (totalData.isEmpty()) totalData = weatherService.download(WeatherService.fileNameData);
+		//else totalData += weatherService.download(WeatherService.fileNameData);
 		lista=weatherService.parse(cities);
 		for(Record v : lista) {
 			if (i==1 && v==lista.get(0)) totalData += weatherService.produceString(v); 

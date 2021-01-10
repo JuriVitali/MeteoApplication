@@ -21,6 +21,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import java.util.Scanner;
 
 /**
  * Classe che implementa l'interfaccia WeatherService
@@ -32,13 +33,6 @@ import org.springframework.web.client.RestTemplate;
 
 
 public class WeatherServiceImplementation implements WeatherService {
-	/*private static long id;
-	private static String name;
-	private static String time;
-	private static double temperature;
-	private static double tempPer;
-	private static double tempMax;
-	private static double tempMin;*/
 	
 	
 /**
@@ -74,17 +68,23 @@ public String download(String nomeFile) {
 		openConnection.setRequestMethod("POST");
 		openConnection.setRequestProperty("Authorization", "Bearer shQTHaqinxoAAAAAAAAAAUg4F3FzXp7tj5wWFN8TvnYSzuGBhfgeytEU4CoQ3RTz");
 		openConnection.setRequestProperty("Dropbox-API-Arg", "{ \"path\": \""+nomeFile+"\"}");
-		//System.out.println("prova");
 		InputStream in = openConnection.getInputStream();
 		String line = "";
 		try {
+			int next;
+			char c;
 			InputStreamReader inR = new InputStreamReader( in );
 			BufferedReader buf = new BufferedReader( inR );
-			while ( ( line = buf.readLine() ) != null ) {
-				data +=line;
-			}
+			if (nomeFile=="/Data.json") do {
+											next = buf.read();
+											if ( next != ']') {
+												c = (char)next;
+												data+=c;
+											}
+										} while ( next != -1); 
+			else while ((line = buf.readLine()) != null) {data += line;}
 		} finally {
-			in.close();
+			in.close();	
 		}
 	} catch (IOException e) {
 		System.out.println("ERRORE");
@@ -111,11 +111,14 @@ public void update(String newData, String nomeFile) {
 		try (OutputStream os = openConnection.getOutputStream()) {
 			byte[] input = newData.getBytes("utf-8");
 			os.write(input, 0, input.length);
-		}
+			//os.flush();
+		} 
+		openConnection.getInputStream();
 	} catch (IOException e) {
 		System.out.println("ERRORE");
 		e.printStackTrace();
 	} 
+	
 }
 
 
@@ -124,27 +127,16 @@ public void update(String newData, String nomeFile) {
  */
 @Override
 public Vector<Record> parse(Vector<City> lista) {
-	//Record r=new Record();
 	Vector<Record> listData = new Vector<Record>();
-	//JSONParser parser = new JSONParser();
 	JSONObject obj =null;
-	RestTemplate restTemplate = new RestTemplate(); // oggetto che serve per consumare una API
+	RestTemplate restTemplate = new RestTemplate();
 	String result;
 	for (City c : lista) {
-		//Record r=new Record();
 		JSONParser parser = new JSONParser();
-		//JSONObject obj =null;
-		//RestTemplate restTemplate = new RestTemplate(); // oggetto che serve per consumare una API
 		result = restTemplate.getForObject("https://api.openweathermap.org/data/2.5/weather?id=" + c.getId() + "&units=metric&appid=cb240c9a23197aad47fd81d2660b6b8a", String.class);
 		try  {
 			obj = (JSONObject) parser.parse(result);
-			//r.setId((long) obj.get("id"));
-			//r.setName((String) obj.get("name"));
             JSONObject main = (JSONObject) obj.get("main");
-			//r.setTemperature(Double.parseDouble(main.get("temp").toString())); 
-			//r.setTempMin(Double.parseDouble(main.get("temp_min").toString())); 
-			//r.setTempMax(Double.parseDouble(main.get("temp_max").toString()));
-			//r.setTempPer(Double.parseDouble(main.get("feels_like").toString())
 			listData.add(new Record((long) obj.get("id"),(String) obj.get("name"),(Double.parseDouble(main.get("temp").toString())),
 					(Double.parseDouble(main.get("feels_like").toString())),(Double.parseDouble(main.get("temp_max").toString())),
 							(Double.parseDouble(main.get("temp_min").toString())),(long) obj.get("dt")));
@@ -170,7 +162,8 @@ public String produceString(Record r) {
 	        o.put("tempPerc", r.getTempPer());
 	        o.put("tempMax", r.getTempMax());
 	        o.put("tempMin", r.getTempMin());
-	        return o.toJSONString();
+	        String s="\n"+o.toJSONString();
+	        return s;
 }
 	         
 	         
