@@ -135,7 +135,7 @@ public class WeatherServiceImplementation implements WeatherService {
 				sdf.setTimeZone(TimeZone.getTimeZone("Italy/Rome")); 
 				String formattedDate = sdf.format(date);
 				JSONObject main = (JSONObject) obj.get("main");
-				listData.add(new Record((long) obj.get("id"),(String) obj.get("name"),(Double.parseDouble(main.get("temp").toString())),
+				listData.add(new Record((long) obj.get("id"),c.getName(),(Double.parseDouble(main.get("temp").toString())),
 						(Double.parseDouble(main.get("feels_like").toString())),(Double.parseDouble(main.get("temp_max").toString())),
 								(Double.parseDouble(main.get("temp_min").toString())),formattedDate));
 			} catch (ParseException e) {
