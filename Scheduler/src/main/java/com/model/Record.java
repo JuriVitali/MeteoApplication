@@ -1,5 +1,11 @@
-package model;
+package com.model;
 
+/**
+ * Classe che descrive i dati riguardanti la temperatura rilevati in una citta'. 
+ * 
+ * @author Juri Vitali
+ * @author Nicola Sebastianelli
+ */
 public class Record extends City{
 	private double temperature;
 	private double tempPer;
@@ -7,7 +13,17 @@ public class Record extends City{
 	private double tempMin;
 	private String time;
 	
-	//costruttore
+	/**
+	 * Costruttore che inizializza tutti i campi dell'oggetto con gli argomenti passatigli.
+	 * 
+	 * @param id ID della citta'
+	 * @param name nome della citta'
+	 * @param temperature temperatura generale
+	 * @param tempPer temperatura percepita
+	 * @param tempMax temperatura massima all'interno della citta'
+	 * @param tempMin temperatura minima all'interno della citta'
+	 * @param time data e ora in cui è avvenuta la misurazione
+	 */
 	public Record(long id, String name, double temperature, double tempPer, double tempMax, double tempMin , String time) {
 		super(id, name);
 		this.temperature = temperature;
@@ -17,6 +33,10 @@ public class Record extends City{
 		this.time=time;
 	}
 	
+	/**
+	 * Costruttore senza parametri che inizializza tutti i dati sulle temperature e id a 0; invece nome e tempo in 
+	 * cui viene effettuata la misura vengono inizializzati con una stringa vuota.
+	 */
 	public Record() {
 		super(0, "");
 		temperature=0;
@@ -67,11 +87,7 @@ public class Record extends City{
 		this.time = time;
 	}
 
-	@Override
-	public String toString() {
-		return "Record [id= "+ id + " ,name= " + name +",temperature=" + temperature + ", tempPer=" + tempPer + ", tempMax=" + tempMax + ", tempMin="
-				+ tempMin + ", time=" + time + "]";
-	}
+	
 	
 	
 }
