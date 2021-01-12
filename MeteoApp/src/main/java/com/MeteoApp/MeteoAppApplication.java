@@ -1,13 +1,13 @@
-package com.example.demo;
+package com.MeteoApp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class DemoApplication {
+public class MeteoAppApplication {
 
 	public static void main(String[] args) {
-		//ci va l'istruzione per il parsing 
-		SpringApplication.run(DemoApplication.class, args);
+		SpringApplication.run(MeteoAppApplication.class, args);
 	}
+
 }

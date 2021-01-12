@@ -6,7 +6,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 
 /**
- * Classe che contiene solamente il main e ha lo scopo di avvia lo scheduler e puo' resettare il file contenente i dati sulle temperature
+ * Classe che contiene solamente il main e ha lo scopo di avviare lo scheduler
  * 
  * @author Juri Vitali
  * @author Nicola Sebstianelli
@@ -21,5 +21,4 @@ public class SchedulerApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SchedulerApplication.class, args);
 	}
-
 }

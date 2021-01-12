@@ -21,6 +21,7 @@ public class ScheduledTasks {
 	private Vector<City> cities;
 	private WeatherService weatherService = new WeatherServiceImplementation() ;
 	private Vector<Record> lista;
+	
 	/**
 	 * Metodo che viene eseguito ogni ora e che serve per raccogliere informazioni sulle temperature registrate in alcune citta' su un file
 	 * json che si trova in un account Dropbox. Le citta' (nome e id) di cui vengono raccolti i dati sono prese da un file contenuto nel 
