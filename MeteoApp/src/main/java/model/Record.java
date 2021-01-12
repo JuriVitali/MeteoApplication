@@ -3,7 +3,7 @@ package model;
 public class Record {
 	private long id;
 	private String name;
-	private Data data;
+	private Data date;
 	private double temperature;
 	private double tempPer;
 	private double tempMax;
@@ -40,10 +40,10 @@ public class Record {
 		
 	}
 
-	public Record(long id, String name, Data data, double temperature, double tempPer, double tempMax, double tempMin) {
+	public Record(long id, String name, Data date, double temperature, double tempPer, double tempMax, double tempMin) {
 		this.id = id;
 		this.name = name;
-		this.data = data;
+		this.date = date;
 		this.temperature = temperature;
 		this.tempPer = tempPer;
 		this.tempMax = tempMax;
@@ -67,11 +67,11 @@ public class Record {
 	}
 
 	public Data getData() {
-		return data;
+		return date;
 	}
 
 	public void setData(Data data) {
-		this.data = data;
+		this.date = data;
 	}
 
 	public double getTemperature() {
