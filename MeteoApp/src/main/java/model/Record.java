@@ -1,8 +1,6 @@
 package model;
 
-public class Record {
-	private long id;
-	private String name;
+public class Record extends City{
 	private Data date;
 	private double temperature;
 	private double tempPer;
@@ -40,30 +38,14 @@ public class Record {
 		
 	}
 
+	
 	public Record(long id, String name, Data date, double temperature, double tempPer, double tempMax, double tempMin) {
-		this.id = id;
-		this.name = name;
+		super(id, name);
 		this.date = date;
 		this.temperature = temperature;
 		this.tempPer = tempPer;
 		this.tempMax = tempMax;
 		this.tempMin = tempMin;
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public Data getData() {
