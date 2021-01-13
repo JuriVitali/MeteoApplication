@@ -27,4 +27,86 @@ public class Statistics extends City{
 		percTempVar = calculator.calculatePercTempVariance();
 	}
 
+
+	public double getRealTempAvg() {
+		return realTempAvg;
+	}
+
+
+	public void setRealTempAvg(double realTempAvg) {
+		this.realTempAvg = realTempAvg;
+	}
+
+
+	public double getRealTempMin() {
+		return realTempMin;
+	}
+
+
+	public void setRealTempMin(double realTempMin) {
+		this.realTempMin = realTempMin;
+	}
+
+
+	public double getRealTempMax() {
+		return realTempMax;
+	}
+
+
+	public void setRealTempMax(double realTempMax) {
+		this.realTempMax = realTempMax;
+	}
+
+
+	public double getRealTempVariance() {
+		return realTempVariance;
+	}
+
+
+	public void setRealTempVariance(double realTempVariance) {
+		this.realTempVariance = realTempVariance;
+	}
+
+
+	public double getPercTempAvg() {
+		return percTempAvg;
+	}
+
+
+	public void setPercTempAvg(double percTempAvg) {
+		this.percTempAvg = percTempAvg;
+	}
+
+
+	public double getPercTempMin() {
+		return percTempMin;
+	}
+
+
+	public void setPercTempMin(double percTempMin) {
+		this.percTempMin = percTempMin;
+	}
+
+
+	public double getPercTempMax() {
+		return percTempMax;
+	}
+
+
+	public void setPercTempMax(double percTempMax) {
+		this.percTempMax = percTempMax;
+	}
+
+
+	public double getPercTempVar() {
+		return percTempVar;
+	}
+
+
+	public void setPercTempVar(double percTempVar) {
+		this.percTempVar = percTempVar;
+	}
+	
+	
+	
 }

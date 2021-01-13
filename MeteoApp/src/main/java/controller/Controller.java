@@ -13,6 +13,7 @@ import model.Record;
 import model.Metadata;
 import model.City;
 import model.Statistics;
+import database.DataManagement;
 
 @RestController
 public class Controller {
@@ -59,5 +60,21 @@ public class Controller {
 		//restituisce un vettore di City con le città contenute nella risposta di metodo 0
 		return null;
 	}
+	
+	@RequestMapping(value = "filterStats", method = RequestMethod.POST)
+	public Vector<City> StatsFilter(@RequestParam (name ="periodStart") String inizio, @RequestParam (name = "periodEnd") String fine, 
+			@RequestBody Object filtro) {
+		//chiamo metodo per trasformare le date in un oggetto di tipo data
+		//uso direttamente il filtro per le date
+		Vector<Statistics> stats = new Vector<Statistics>(); 
+		for (City c : DataManagement.elencoCitta) {
+			//filtro il vettore ottenuto in precedenza prendendo solo i record relativi alla città c
+			//aggiungo a stats un elemento passando al costruttore di stats l'id di c,il nome di c e il vettore direcord appena ottenuto.
+		}    
+		//chiamo un metodo per il parsing del body e che gestisce l'applicazione dei vari filtri su un vector di Statistics
+		//restituisco un vector di city
+		return null;
+	}
+	
 	
 }

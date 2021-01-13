@@ -34,7 +34,7 @@ public class DataManagement {
 	}
 	
 	public static void downloadAndParseCities() {
-		//effettua una chiamata a Dropboox per scaricare i dati delle città presenti sul file CityList.json e parsa i dati
+		//effettua una chiamata a Dropbox per scaricare i dati delle città presenti sul file CityList.json e parsa i dati
 		//popolando IL vector di city elencoCittà
 		
 	}
