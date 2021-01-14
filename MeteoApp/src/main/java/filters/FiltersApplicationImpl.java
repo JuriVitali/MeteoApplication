@@ -6,7 +6,7 @@ import model.City;
 import model.Statistics;
 
 
-public class FiltersImpl implements Filters{
+public class FiltersApplicationImpl implements FiltersApplication{
 	
 	
 	public Vector<City> reTempAvgIncl (Vector<Statistics> v, double min, double max) {

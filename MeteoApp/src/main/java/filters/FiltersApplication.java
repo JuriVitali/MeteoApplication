@@ -5,7 +5,7 @@ import model.City;
 
 import java.util.Vector;
 
-public interface Filters {
+public interface FiltersApplication {
 	//filtri su data
 	
 	//filtri per temperatura

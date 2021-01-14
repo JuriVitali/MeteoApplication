@@ -6,38 +6,16 @@ public class Record extends City{
 	private double tempPer;
 	private double tempMax;
 	private double tempMin;
-	
-	public class Data {
-		private int giorno;
-		private int mese;
-		private int anno;
-		public Data(int giorno, int mese, int anno) {
-			this.giorno = giorno;
-			this.mese = mese;
-			this.anno = anno;
-		}
-		public int getGiorno() {
-			return giorno;
-		}
-		public void setGiorno(int giorno) {
-			this.giorno = giorno;
-		}
-		public int getMese() {
-			return mese;
-		}
-		public void setMese(int mese) {
-			this.mese = mese;
-		}
-		public int getAnno() {
-			return anno;
-		}
-		public void setAnno(int anno) {
-			this.anno = anno;
-		}
-		
-		
-	}
 
+
+	public Record() {
+		super(0, "");
+		this.date = new Data(0,0,0);
+		this.temperature = 0;
+		this.tempPer = 0;
+		this.tempMax = 0;
+		this.tempMin = 0;
+	}
 	
 	public Record(long id, String name, Data date, double temperature, double tempPer, double tempMax, double tempMin) {
 		super(id, name);

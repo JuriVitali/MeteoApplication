@@ -28,17 +28,17 @@ public class Controller {
 		return DataManagement.getData();
 	}
 	
-	@RequestMapping(value = "name", method = RequestMethod.GET)
-	public Vector<City> getName() {
-		return DataManagement.getCities();
+	@RequestMapping(value = "getId", method = RequestMethod.GET)
+	public Vector<City> getCityName(@RequestParam (name="name") String sottostringa) {
+		return DataManagement.getCities(sottostringa);
 	}
 	
 	@RequestMapping(value = "stats", method = RequestMethod.POST)
 	public Statistics getStats(@RequestParam (name="id") long id) {
 		//chiama filtro per id
 		Vector<Record> vettoreFiltrato = new Vector<Record>(); //in verità dovrà prendere il risultato della chiamata al filtro
+		if (vettoreFiltrato.isEmpty())/*lancia un'eccezione*/;
 		String name=DataManagement.takeName(id);
-		//if( (name=DataManagement.takeName(id)) == null ) throw ...    controlla se l'id è valido. Se no lancia un'eccezione
 		//chiama metodo 0
 		//controllare se il vettore filtrato è vuoto
 		Statistics stats = new Statistics (id, name, vettoreFiltrato);
