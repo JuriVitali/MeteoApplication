@@ -1,5 +1,6 @@
 package controller;
 
+import org.json.simple.parser.ParseException;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -7,73 +8,104 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import database.DataManagement;
+import database.DataManagementImplementation;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Vector;
 import model.Record;
 import model.Metadata;
 import model.City;
+import model.Data;
 import model.Statistics;
-import database.DataManagement;
+import util.DateOperations;
+import filters.RecordFilterManagement;
+import filters.StatisticsFilterManagement;
 
 @RestController
 public class Controller {
 	
+	private DataManagement datamanagement = new  DataManagementImplementation();
+	
+	
 	@RequestMapping(value = "metadata", method=RequestMethod.GET)
 	public Vector<Metadata> getVectorMetadata() {
-		return DataManagement.getMetadata();
+		return datamanagement.getMetadata();
 	}
 	
 	@RequestMapping(value = "data", method=RequestMethod.GET)
 	public Vector<Record> getAllData() {
-		return DataManagement.getData();
+		return datamanagement.getData();
 	}
 	
 	@RequestMapping(value = "getId", method = RequestMethod.GET)
 	public Vector<City> getCityName(@RequestParam (name="name") String sottostringa) {
-		return DataManagement.getCities(sottostringa);
+		return datamanagement.getCities(sottostringa);
 	}
 	
-	@RequestMapping(value = "stats", method = RequestMethod.POST)
-	public Statistics getStats(@RequestParam (name="id") long id) {
-		//chiama filtro per id
-		Vector<Record> vettoreFiltrato = new Vector<Record>(); //in verità dovrà prendere il risultato della chiamata al filtro
-		if (vettoreFiltrato.isEmpty())/*lancia un'eccezione*/;
-		String name=DataManagement.takeName(id);
-		//chiama metodo 0
-		//controllare se il vettore filtrato è vuoto
-		Statistics stats = new Statistics (id, name, vettoreFiltrato);
+	@RequestMapping(value = "stats", method = RequestMethod.POST)    
+	public Statistics getStats(@RequestParam (name="id") long id, @RequestBody String filtro) throws ParseException {
+		Vector<Record> vettoreFiltrato = new Vector<Record>(); 
+		for (Record r: DataManagement.listaDati) if(r.getId()==id) vettoreFiltrato.add(r);  //selezione dei record relativi alla città con id passato come parametro
+		if (vettoreFiltrato.isEmpty())/*lancia un'eccezione: id non valido*/;
+		String name=datamanagement.takeName(id);
+		vettoreFiltrato = RecordFilterManagement.parseBody(filtro, vettoreFiltrato, 4);  //filtraggio rispetto al periodo
+		Statistics stats = new Statistics (id, name, vettoreFiltrato);   //si istanzia un oggetto contenente nome, id e statistiche della città
 		return stats;
 	}
 	
-	@RequestMapping(value = "liveTemp", method = RequestMethod.POST)
-	public Vector<Record> getTemps(@RequestBody Object fitro) {
-		//chiama metodo 0 (vedere alla fine se occorre implementare un altro metodo)
-		//controlla se il vettore filtrato è vuoto
-		//per ogni elemento del vettore filtrato chiama un metodo che esegue una chiamata all'API di OpenWeather.
-		//Ogni elemento di tipo Record restituito da tale metodo viene aggiunto al vettore di record che alla fine va restituito
-		return null;
+	@RequestMapping(value = "liveTemp", method = RequestMethod.POST) 
+	public Vector<Record> getTemps(@RequestBody String filtro) throws ParseException {
+		Vector<Record> vettoreFiltrato = RecordFilterManagement.parseBody(filtro, DataManagement.listaDati, 5);  //filtra record in base all'id
+		Vector<City> cittaFiltrate = new Vector<City>();
+		for (Record v : vettoreFiltrato) cittaFiltrate.add(new City(v.getId(),v.getName()));    //popola il vettore cittaFiltrate con le città che rispondo ad un certo id
+		Vector<Record> risposta = new Vector<Record>();
+		/*Per ogni citta' che soddisfa il filtro sull'id viene chiamato getLiveData che effettua una chiamata all'API
+		 *di OpenWeather e restituisce un Vector di Record contenente le informazioni desiderate
+		*/
+		for (City c : cittaFiltrate) risposta.add(datamanagement.getLiveData(c.getId())); 
+		return risposta;
 	}
 	
-	@RequestMapping(value = "cities", method = RequestMethod.POST)
-	public Vector<City> CityFilter(@RequestBody Object filtro) {
-		//chiama metodo 0 
-		//restituisce un vettore di City con le città contenute nella risposta di metodo 0
-		return null;
+	@RequestMapping(value = "cities", method = RequestMethod.POST)  
+	public Vector<City> CityFilter(@RequestBody String filtro) throws ParseException {
+		Vector<Record> vettoreFiltrato = RecordFilterManagement.parseBody(filtro, DataManagement.listaDati, 6); //filtra il vettore con tutti i dati
+		
+		//si prendono le citta' che dispongono di misurazioni che rispettano tutti i filtri
+		Vector<City> cittaFiltrate = new Vector<City>();
+		for (Record v : vettoreFiltrato) cittaFiltrate.add(new City(v.getId(),v.getName()));  
+		return cittaFiltrate;
 	}
 	
 	@RequestMapping(value = "filterStats", method = RequestMethod.POST)
 	public Vector<City> StatsFilter(@RequestParam (name ="periodStart") String inizio, @RequestParam (name = "periodEnd") String fine, 
-			@RequestBody Object filtro) {
-		//chiamo metodo per trasformare le date in un oggetto di tipo data
-		//uso direttamente il filtro per le date
+			@RequestBody String filtro) throws ParseException {
+		
+		//Trasformazione delle stringhe contenenti le date in oggetto di tipo data
+		Data begin = new Data(DateOperations.getGiorno(inizio), DateOperations.getMese(inizio), DateOperations.getAnno(inizio));
+		Data end = new Data(DateOperations.getGiorno(fine), DateOperations.getMese(fine), DateOperations.getAnno(fine));
+		
+		//verifica che la seconda sia maggiore della prima. Altrimenti lancia un'eccezione
+		if (DateOperations.confrontaDate(begin, end)==-1)/*parametri non validi*/;
+		Vector<Record> arrayFiltrato = new Vector<Record>();
+		
+		//selezione delle misurazioni avvenute nel periodo relativamente al quale si desiderano sapere le statistiche
+		for (Record r : DataManagement.listaDati) 
+			if( (DateOperations.confrontaDate(r.getData(),begin)==-1 || DateOperations.confrontaDate(r.getData(),begin)==0) &&
+					(DateOperations.confrontaDate(r.getData(),end)==1 || DateOperations.confrontaDate(r.getData(),end)==0) )
+				arrayFiltrato.add(r);
 		Vector<Statistics> stats = new Vector<Statistics>(); 
-		for (City c : DataManagement.elencoCitta) {
-			//filtro il vettore ottenuto in precedenza prendendo solo i record relativi alla città c
-			//aggiungo a stats un elemento passando al costruttore di stats l'id di c,il nome di c e il vettore direcord appena ottenuto.
+		Vector<Record> misurazioniCitta = new Vector<Record>();
+		
+		//per ogni città viene creato un vettore di stats prendendo in considerazione solo le misurazioni avvenute nel periodo scelto
+		for (City c : DataManagementImplementation.elencoCitta) {
+			for (Record r : arrayFiltrato) if (c.getId()==r.getId()) misurazioniCitta.add(r); 
+			stats.add(new Statistics(c.getId(),c.getName(),misurazioniCitta));
 		}    
-		//chiamo un metodo per il parsing del body e che gestisce l'applicazione dei vari filtri su un vector di Statistics
-		//restituisco un vector di city
-		return null;
+		
+		//chiamata di un metodo per il parsing del body e che gestisce l'applicazione dei vari filtri su un vector di Statistics
+		Vector<City> cittaFiltrate = StatisticsFilterManagement.parseBody(filtro,stats);
+		return cittaFiltrate;
 	}
 	
 	

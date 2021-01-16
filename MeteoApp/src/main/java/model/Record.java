@@ -26,6 +26,16 @@ public class Record extends City{
 		this.tempMin = tempMin;
 	}
 
+	public Record(Record r) {
+		super(0,"");
+		this.setId(r.getId());
+		this.setData(r.getData());
+		this.temperature = r.getTemperature();
+		this.tempPer = r.getTempPer();
+		this.tempMax = r.getTempMax();
+		this.tempMin = r.getTempMin();
+	}
+	
 	public Data getData() {
 		return date;
 	}

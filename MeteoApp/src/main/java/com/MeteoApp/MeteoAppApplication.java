@@ -3,14 +3,17 @@ package com.MeteoApp;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import database.DataManagement;
+import database.DataManagementImplementation;
+
 @SpringBootApplication
 public class MeteoAppApplication {
 
+	private static DataManagement datamanagement = new  DataManagementImplementation();
+	
 	public static void main(String[] args) {
-		
-		//invocazione del metodo che consente di effettuare la richiesta a Dropbox per scaricare il contenuto del file Data.json
-		//e di parsare tale contenuto popolando un oggetto Vector di tipo Record 
-		
+		datamanagement.downloadAndParseCities();
+		datamanagement.downloadAndParseData();
 		SpringApplication.run(MeteoAppApplication.class, args);
 	}
 

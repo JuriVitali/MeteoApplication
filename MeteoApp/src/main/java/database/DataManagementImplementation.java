@@ -2,11 +2,6 @@ package database;
 
 import java.util.Vector;
 
-
-import java.util.Date;
-import java.util.TimeZone;
-import java.util.Vector;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -15,12 +10,10 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 
 import model.City;
 import model.Metadata;
@@ -28,12 +21,21 @@ import model.Record;
 import model.Data;
 import util.DateOperations;
 
-public class DataManagement {
+/**
+ * Classe che implementa l'interfaccia DataManagement
+ * 
+ * @author Nicola Sebastianelli
+ * @author Juri Vitali
+ *
+ */
+public class DataManagementImplementation implements DataManagement {
 	
-	public static Vector<Record>  listaDati = new Vector<Record>();
-	public static Vector<City>  elencoCitta = new Vector<City>();
 	
-	public static Vector<Metadata> getMetadata() {
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public Vector<Metadata> getMetadata() {
 		Vector<Metadata> elencoMetadati = new Vector<Metadata>();
 		elencoMetadati.add(new Metadata("id","Codice identificativo della città","long"));
 		elencoMetadati.add(new Metadata("name","Nome della città","String"));
@@ -53,14 +55,18 @@ public class DataManagement {
 		return elencoMetadati;
 	}
 	
-	public static Vector<Record> getData() {
+	/**
+	 * {@inheritDoc}
+	 */
+	public Vector<Record> getData() {
 		return listaDati;
 	}
 	
-	
-	public static void downloadAndParseData() {
+	/**
+	 * {@inheritDoc}
+	 */
+	public void downloadAndParseData() {
 		String data = "";
-		Vector<Record> listaDati = new Vector<Record>();
 	    Data date = new Data(0,0,0);
 		HttpURLConnection openConnection;
 		try {
@@ -103,11 +109,10 @@ public class DataManagement {
 	    } 
 	}
 	
-	
-	public static void downloadAndParseCities() {
-		//effettua una chiamata a Dropbox per scaricare i dati delle città presenti sul file CityList.json e parsa i dati
-		//popolando IL vector di city elencoCittà
-		Vector<City> elencoCitta = new Vector<City>();
+	/**
+	 * {@inheritDoc}
+	 */
+	public void downloadAndParseCities() {
 		HttpURLConnection openConnection;
 		String data = "";
 		try {
@@ -138,8 +143,11 @@ public class DataManagement {
 			e.printStackTrace();
 		}
 	}
-
-	public static Vector<City> getCities(String sottostringa) {
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public Vector<City> getCities(String sottostringa) {
 		/*prende come parametro una sottostringa, filtra in base ad essa il vector elenco città.
 		 *  Infine restituisce un Vector di tipo City il cui nome delle città contiene la sottostringa.
      	*/
@@ -150,12 +158,18 @@ public class DataManagement {
 		return cittaTrovata;
 	}
 	
-	public static String takeName(long id) {
+	/**
+	 * {@inheritDoc}
+	 */
+	public String takeName(long id) {
 		for(City citta : elencoCitta)	if (citta.getId()==id) return citta.getName();
 	return null;
 	}
 	
-	public static Record getLiveData(long id) {
+	/**
+	 * {@inheritDoc}
+	 */
+	public Record getLiveData(long id) {
 		//effettua una chiamata all'api di Open-weather per scaricare i dati relativi alla temperatura attuale e li parsa popolando un 
 		//elemento di tipo record.Serve un metodo per ottenere la data attuale.
 		Record CityTempAtt = new Record();
@@ -170,7 +184,7 @@ public class DataManagement {
 			JSONObject main = (JSONObject) obj.get("main");
 			CityTempAtt.setId((long) obj.get("id"));
 			CityTempAtt.setName((String) obj.get("name"));
-			CityTempAtt.setData(ottieniDataAtt(unixSeconds));
+			CityTempAtt.setData(DateOperations.ottieniDataAtt(unixSeconds));
 			CityTempAtt.setTemperature((Double.parseDouble(main.get("temp").toString())));
 		    CityTempAtt.setTempPer((Double.parseDouble(main.get("feels_like").toString())));
 			CityTempAtt.setTempMax((Double.parseDouble(main.get("temp_max").toString())));
@@ -179,18 +193,6 @@ public class DataManagement {
 			e.printStackTrace();
 		}
 		return CityTempAtt;
-}	
+	}	
 
-
-	public static Data ottieniDataAtt(long unixSeconds) {
-		Data data = new Data(0,0,0);
-		Date date = new Date(unixSeconds*1000L); 
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd "); 
-		sdf.setTimeZone(TimeZone.getTimeZone("Italy/Rome")); 
-		String formattedDate = sdf.format(date);
-		data.setAnno(DateOperations.getAnno(formattedDate));
-		data.setMese(DateOperations.getMese(formattedDate));
-		data.setGiorno(DateOperations.getGiorno(formattedDate));
-		return data;
-	}
 }

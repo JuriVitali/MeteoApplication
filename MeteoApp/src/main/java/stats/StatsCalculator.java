@@ -12,43 +12,51 @@ public class StatsCalculator {
 	}
 	
 	public double calculateRealTempAvg() { //temperatura reale media
-		//da implementare
-		return 0;
+		Vector<Double> temp = new Vector<Double>();
+		for (Record misura : misurazioni) temp.add(misura.getTemperature());
+		return basic.avg(temp);
 	}
 	
 	public double calculateRealTempMin() { //temperatura reale minima
-		//da implementare
-		return 0;
+		Vector<Double> RealTemp = new Vector<Double>();
+		for (Record i : misurazioni) RealTemp.add(i.getTempMin());
+		return basic.min(RealTemp);
 	}
 	
 	public double calculateRealTempMax() { //temperatura reale massima
-		//da implementare
-		return 0;
+		Vector<Double> RealTemp = new Vector<Double>();
+		for (Record i : misurazioni) RealTemp.add(i.getTempMax());
+		return basic.max(RealTemp);
 	}
 	
 	public double calculateRealTempVariance() { //varianza temperatura reale
-		//da implementare
-		return 0;
+		Vector<Double> RealTemp = new Vector<Double>();
+		for (Record i : misurazioni) RealTemp.add(i.getTemperature());
+		return basic.variance(RealTemp);
 	}
 	
 	public double calculatePercTempAvg() { //temperatura percepita media
-		//da implementare
-		return 0;
+		Vector<Double> PercTemp = new Vector<Double>();
+		for (Record i : misurazioni) PercTemp.add(i.getTempPer());
+		return basic.avg(PercTemp);
 	}
 	
 	public double calculatePercTempMin() { //temperatura percepita minima
-		//da implementare
-		return 0;
+		Vector<Double> PercTemp = new Vector<Double>();
+		for (Record i : misurazioni) PercTemp.add(i.getTempPer());
+		return basic.min(PercTemp);
 	}
 	
 	public double calculatePercTempMax() { //temperatura percepita massima
-		//da implementare
-		return 0;
+		Vector<Double> PercTemp = new Vector<Double>();
+		for (Record i : misurazioni) PercTemp.add(i.getTempPer());
+		return basic.max(PercTemp);
 	}
 	
 	public double calculatePercTempVariance() { //varianza temperatura percepita
-		//da implementare
-		return 0;
+		Vector<Double> PercTemp = new Vector<Double>();
+		for (Record i : misurazioni) PercTemp.add(i.getTempPer());
+		return basic.variance(PercTemp);
 	}
 
 }

@@ -1,45 +1,61 @@
 package filters;
 
 import model.Statistics;
-import model.City;
+import model.Data;
+import model.Record;
 
 import java.util.Vector;
 
-public interface FiltersApplication {
+interface FiltersApplication {
 	//filtri su data
+	Vector<Record> DateFilter_gte(Vector<Record> v, Data param);
+	Vector<Record> DateFilter_gt(Vector<Record> v, Data param);
+	Vector<Record> DateFilter_bt(Vector<Record> v, Data inizio, Data fine);
+	Vector<Record> DateFilter_eq(Vector<Record> v, Data param);
 	
 	//filtri per temperatura
+	Vector<Record> TempFilter_gt(Vector<Record> record, double TempPar);
+	Vector<Record> TempFilter_less(Vector<Record> record, double TempPar);  
+	Vector<Record> TempFilter_bt(Vector<Record> record, double TempPar1, double TempPar2);
 	
 	//filtri per temperatura percepita
+	Vector<Record> TempPerFilter_gt(Vector<Record> record, double TempPar);
+	Vector<Record> TempPerFilter_less(Vector<Record> record, double TempPar);  
+	Vector<Record> TempPerFilter_bt(Vector<Record> record, double TempPar1, double TempPar2);  
 	
-	//filtri per statistiche :devono prendere come parametri , il/i
-	// valori di riferimento e il vector di statistics da filtrare
-	//Devono restituire un Vector di city filtrato
-	public Vector<City> reTempAvgIncl (Vector<Statistics> v, double min, double max);
-	public Vector<City> reTempMinIncl (Vector<Statistics> v, double min, double max);
-	public Vector<City> reTempMaxIncl (Vector<Statistics> v, double min, double max);
-	public Vector<City> reTempVarIncl (Vector<Statistics> v, double min, double max);
-	public Vector<City> percTempAvgIncl (Vector<Statistics> v, double min, double max);
-	public Vector<City> percTempMinIncl (Vector<Statistics> v, double min, double max);
-	public Vector<City> percTempMaxIncl (Vector<Statistics> v, double min, double max);
-	public Vector<City> percTempVarIncl (Vector<Statistics> v, double min, double max);
+	//filtri sulle statistiche
 	
-	public Vector<City> reTempAvgLess (Vector<Statistics> v, double max);
-	public Vector<City> reTempMinLess (Vector<Statistics> v, double max);
-	public Vector<City> reTempMaxLess (Vector<Statistics> v, double max);
-	public Vector<City> reTempVarLess (Vector<Statistics> v, double max);
-	public Vector<City> percTempAvgLess (Vector<Statistics> v, double max);
-	public Vector<City> percTempMinLess (Vector<Statistics> v, double max);
-	public Vector<City> percTempMaxLess (Vector<Statistics> v, double max);
-	public Vector<City> percTempVarLess (Vector<Statistics> v, double max);
+	//compreso
+	Vector<Statistics> reTempAvgIncl (Vector<Statistics> v, double min, double max);
+	Vector<Statistics> reTempMinIncl (Vector<Statistics> v, double min, double max);
+	Vector<Statistics> reTempMaxIncl (Vector<Statistics> v, double min, double max);
+	Vector<Statistics> reTempVarIncl (Vector<Statistics> v, double min, double max);
+	Vector<Statistics> percTempAvgIncl (Vector<Statistics> v, double min, double max);
+	Vector<Statistics> percTempMinIncl (Vector<Statistics> v, double min, double max);
+	Vector<Statistics> percTempMaxIncl (Vector<Statistics> v, double min, double max);
+	Vector<Statistics> percTempVarIncl (Vector<Statistics> v, double min, double max);
 	
-	public Vector<City> reTempAvgGreat (Vector<Statistics> v, double min);
-	public Vector<City> reTempMinGreat (Vector<Statistics> v, double min);
-	public Vector<City> reTempMaxGreat (Vector<Statistics> v, double min);
-	public Vector<City> reTempVarGreat (Vector<Statistics> v, double min);
-	public Vector<City> percTempAvgGreat (Vector<Statistics> v, double min);
-	public Vector<City> percTempMinGreat (Vector<Statistics> v, double min);
-	public Vector<City> percTempMaxGreat (Vector<Statistics> v, double min);
-	public Vector<City> percTempVarGreat (Vector<Statistics> v, double min);
+	//minore
+	Vector<Statistics> reTempAvgLess (Vector<Statistics> v, double max);
+	Vector<Statistics> reTempMinLess (Vector<Statistics> v, double max);
+	Vector<Statistics> reTempMaxLess (Vector<Statistics> v, double max);
+	Vector<Statistics> reTempVarLess (Vector<Statistics> v, double max);
+	Vector<Statistics> percTempAvgLess (Vector<Statistics> v, double max);
+	Vector<Statistics> percTempMinLess (Vector<Statistics> v, double max);
+	Vector<Statistics> percTempMaxLess (Vector<Statistics> v, double max);
+	Vector<Statistics> percTempVarLess (Vector<Statistics> v, double max);
+	
+	//maggiore
+	Vector<Statistics> reTempAvgGreat (Vector<Statistics> v, double min);
+	Vector<Statistics> reTempMinGreat (Vector<Statistics> v, double min);
+	Vector<Statistics> reTempMaxGreat (Vector<Statistics> v, double min);
+	Vector<Statistics> reTempVarGreat (Vector<Statistics> v, double min);
+	Vector<Statistics> percTempAvgGreat (Vector<Statistics> v, double min);
+	Vector<Statistics> percTempMinGreat (Vector<Statistics> v, double min);
+	Vector<Statistics> percTempMaxGreat (Vector<Statistics> v, double min);
+	Vector<Statistics> percTempVarGreat (Vector<Statistics> v, double min);
+
+	//filtro su id
+	Vector<Record> idFilter_eq(Vector<Record> v,long param);
 
 }

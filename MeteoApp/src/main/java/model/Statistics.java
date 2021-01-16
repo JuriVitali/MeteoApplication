@@ -11,7 +11,7 @@ public class Statistics extends City{
 	private double percTempAvg;
 	private double percTempMin;
 	private double percTempMax;
-	private double percTempVar;
+	private double percTempVariance;
 	
 	
 	public Statistics(long id, String name, Vector<Record> misurazioni) {
@@ -24,7 +24,20 @@ public class Statistics extends City{
 		percTempAvg = calculator.calculatePercTempAvg();
 		percTempMin = calculator.calculatePercTempMin();
 		percTempMax = calculator.calculatePercTempMax();
-		percTempVar = calculator.calculatePercTempVariance();
+		percTempVariance = calculator.calculatePercTempVariance();
+	}
+	
+	//costruttore copia
+	public Statistics(Statistics s) {
+		super(s.getId(), s.getName());
+		this.realTempAvg=s.getRealTempAvg();
+		this.realTempMin=s.getRealTempMin();
+		this.realTempMax=s.getRealTempMax();
+		this.realTempVariance=s.getRealTempVariance();
+		this.percTempAvg=s.getPercTempVar();
+		this.percTempMin=s.getPercTempMin();
+		this.percTempMax=s.getPercTempMax();
+		this.percTempVariance=s.getPercTempVar();
 	}
 
 
@@ -99,12 +112,12 @@ public class Statistics extends City{
 
 
 	public double getPercTempVar() {
-		return percTempVar;
+		return percTempVariance;
 	}
 
 
 	public void setPercTempVar(double percTempVar) {
-		this.percTempVar = percTempVar;
+		this.percTempVariance = percTempVar;
 	}
 	
 	

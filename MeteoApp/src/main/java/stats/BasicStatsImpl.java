@@ -27,8 +27,9 @@ public class BasicStatsImpl implements BasicStats{
 
 	@Override
 	public double variance(Vector<Double> temperature) {
-		//da implementare
-		return 0;
+		double sum=0;
+		for (double temperatura : temperature) sum += Math.pow((temperatura - avg(temperature)),2);
+		return (sum/temperature.size());
 	}
 
 }
