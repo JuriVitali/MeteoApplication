@@ -34,7 +34,7 @@ public class RecordFilterManagement {
 					case 5:filteredArray= singleFilterApplicatorRotta5(body,notFilteredArray);break;
 					case 6:filteredArray= singleFilterApplicatorRotta6(body,notFilteredArray);break;
 				}
-		if (rotta==5 || rotta==6)  /*chiamo un metodo per far sì che venga restituito un record per ogni città*/;
+		if (rotta==5 || rotta==6) filteredArray = DeleteDuplicatesCities(filteredArray);
 		return filteredArray;
 	}
 	
@@ -215,6 +215,16 @@ public class RecordFilterManagement {
 		}
 		if(DateOperations.confrontaDate(parametri[0],parametri[1])==-1)/*valori non validi per filtro bt*/;
 		return parametri;
+	}
+	
+	private static Vector<Record> DeleteDuplicatesCities(Vector<Record> v) {
+		Vector<Record> risposta = new Vector<Record>();
+		boolean stessaCitta = false;
+		for (Record r: v) {
+			stessaCitta = false;
+			for (Record R : risposta) if(r.getId()==R.getId()) {stessaCitta = true; break;}
+			if (stessaCitta==false) risposta.add(new Record(r));}
+		return risposta;
 	}
 	
 }
