@@ -1,6 +1,5 @@
 package com.MeteoApplication.controller;
 
-import org.json.simple.parser.ParseException;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -60,7 +59,7 @@ public class Controller {
 		Vector<Record> vettoreFiltrato = new Vector<Record>(); 
 		for (Record r: DataManagement.listaDati) if(r.getId()==id) vettoreFiltrato.add(new Record(r));  //selezione dei record relativi alla città con id passato come parametro
 		String name=datamanagement.takeName(id);
-		if (name == null) return new Statistics (id,"Nessuna città corrisponde all'id selezionato",null);
+		if (name == null) throw new InvalidParametersException ("L'id immesso non corrisponde ad alcuna città registrata.");
 		
 		vettoreFiltrato = RecordFilterManagement.parseBody(filtro, vettoreFiltrato, 4);  //filtraggio rispetto al periodo
 		if (vettoreFiltrato.isEmpty()) return new Statistics ( id , "Nessuna misurazione nel periodo selezionato" , null);
@@ -89,7 +88,9 @@ public class Controller {
 	
 	
 	@RequestMapping(value = "cities", method = RequestMethod.POST)  
-	public Vector<City> CityFilter(@RequestBody String filtro) throws ParseException {
+	public Vector<City> CityFilter(@RequestBody String filtro) throws InvalidFilterException,
+	  IllegalValueException, IllegalOperatorException, IllegalFieldException {
+		
 		Vector<Record> vettoreFiltrato = RecordFilterManagement.parseBody(filtro, DataManagement.listaDati, 6); //filtra il vettore con tutti i dati
 		
 		//si prendono le citta' che dispongono di misurazioni che rispettano tutti i filtri
@@ -102,7 +103,8 @@ public class Controller {
 	
 	@RequestMapping(value = "filterStats", method = RequestMethod.POST)
 	public Vector<City> StatsFilter(@RequestParam (name ="periodStart") String inizio, @RequestParam (name = "periodEnd") String fine, 
-			@RequestBody String filtro) throws InvalidParametersException, ParseException {
+			@RequestBody String filtro) throws InvalidParametersException, InvalidFilterException,
+	                IllegalValueException, IllegalOperatorException, IllegalFieldException {
 		
 		//Trasformazione delle stringhe contenenti le date in oggetto di tipo data
 		Data begin = new Data(DateOperations.getGiorno(inizio), DateOperations.getMese(inizio), DateOperations.getAnno(inizio));

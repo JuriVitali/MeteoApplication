@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
+import com.MeteoApplication.Exception.InvalidDateFormatException;
 import com.MeteoApplication.model.Data;
 
 /**
@@ -24,7 +25,12 @@ public class DateOperations {
 	 */
 	public static int getAnno (String time) {
 		String a = time.substring(0,4);
-		int anno = Integer.parseInt(a);
+		int anno = 0;
+		try {
+			anno = Integer.parseInt(a);
+		} catch (NumberFormatException e) {
+			throw new InvalidDateFormatException("Il formato della data non è valido. Deve rispettare il seguente formato: aaaa-mm-gg.");
+		}
 		return anno;
 	}
 	
@@ -37,7 +43,12 @@ public class DateOperations {
 	 */
 	public static int getMese (String time) {
 		String m = time.substring(5,7);
-		int mese = Integer.parseInt(m);
+		int mese;
+		try {
+			mese = Integer.parseInt(m);
+		} catch (NumberFormatException e) {
+			throw new InvalidDateFormatException("Il formato della data non è valido. Deve rispettare il seguente formato: aaaa-mm-gg.");
+		}
 		return mese;
 	}
 	
@@ -50,7 +61,12 @@ public class DateOperations {
 	 */
 	public static int getGiorno (String time) {
 		String g = time.substring(8,10);
-		int giorno = Integer.parseInt(g);
+		int giorno;
+		try {
+			giorno = Integer.parseInt(g);
+		} catch (NumberFormatException e) {
+			throw new InvalidDateFormatException("Il formato della data non è valido. Deve rispettare il seguente formato: aaaa-mm-gg.");
+		}
 		return giorno;
 	}
 	

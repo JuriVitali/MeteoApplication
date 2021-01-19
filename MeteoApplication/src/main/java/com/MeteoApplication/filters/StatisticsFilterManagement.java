@@ -8,16 +8,26 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import com.MeteoApplication.Exception.IllegalFieldException;
+import com.MeteoApplication.Exception.IllegalOperatorException;
+import com.MeteoApplication.Exception.IllegalValueException;
+import com.MeteoApplication.Exception.InvalidFilterException;
 import com.MeteoApplication.model.City;
 import com.MeteoApplication.model.Statistics;
 
 public class StatisticsFilterManagement {
 	private static FiltersApplication app = new FiltersApplicationImpl();
 	
-	public static Vector<City> parseBody(String filtro, Vector<Statistics> notFilteredArray) throws ParseException {
+	public static Vector<City> parseBody(String filtro, Vector<Statistics> notFilteredArray) 
+	  throws IllegalFieldException, IllegalOperatorException, IllegalValueException, InvalidFilterException{
 		Vector<City> filteredArray = new Vector<City>();
 		JSONParser parser = new JSONParser();
-		JSONObject body = (JSONObject) parser.parse(filtro);
+		JSONObject body = null;
+		try {
+			body = (JSONObject) parser.parse(filtro);
+		} catch (ParseException e) {
+			throw new InvalidFilterException("Filtro non valido: il filtro immesso non rispetta la sintassi di un oggetto JSON");
+		}
 		if(body.containsKey("and")) {
 			JSONArray elencoFiltri = (JSONArray) body.get("and"); 
 			filteredArray = andMultipleFilterApplicator(elencoFiltri, notFilteredArray);
@@ -35,7 +45,9 @@ public class StatisticsFilterManagement {
 	}
 	
 	
-	private static Vector<City> orMultipleFilterApplicator (JSONArray filtri, Vector<Statistics> notFilteredArray){
+	private static Vector<City> orMultipleFilterApplicator (JSONArray filtri, Vector<Statistics> notFilteredArray)
+	  throws IllegalFieldException, IllegalOperatorException, IllegalValueException{
+		
 		Vector<City> finalArray = new Vector<City>();
 		Vector<City> filteredCitiesArray = new Vector<City>();
 		Vector<Statistics> filteredStatArray = new Vector<Statistics>();
@@ -51,7 +63,9 @@ public class StatisticsFilterManagement {
 	}
 	
 	
-	private static Vector<City> andMultipleFilterApplicator (JSONArray filtri, Vector<Statistics> notFilteredArray){
+	private static Vector<City> andMultipleFilterApplicator (JSONArray filtri, Vector<Statistics> notFilteredArray)
+	  throws IllegalFieldException, IllegalOperatorException, IllegalValueException{
+		
 		Vector<Statistics> filteredArray = notFilteredArray;
 		Vector<City> finalArray = new Vector<City>(); 
 		JSONObject filtro = new JSONObject();
@@ -63,7 +77,9 @@ public class StatisticsFilterManagement {
 		return finalArray;
 	}
 	
-	private static Vector<Statistics> singleFilterApplicator (JSONObject filtro, Vector<Statistics> notFilteredArray){
+	@SuppressWarnings("unchecked")
+	private static Vector<Statistics> singleFilterApplicator (JSONObject filtro, Vector<Statistics> notFilteredArray)
+	  throws IllegalFieldException, IllegalOperatorException, IllegalValueException {
 		String campo="";
 		Iterator<String> iterator = filtro.keySet().iterator();
         campo = (String) iterator.next();
@@ -72,7 +88,9 @@ public class StatisticsFilterManagement {
 		Iterator<String> iterator2 = interno.keySet().iterator();
         operatore = (String) iterator2.next();
 		Vector<Statistics> filteredStats = new Vector<Statistics>();
+		
 		switch (operatore) {
+		
 			case "$gt": 
 				double min = (double) interno.get(operatore);
 				switch (campo) {
@@ -84,7 +102,9 @@ public class StatisticsFilterManagement {
 					case "PercTempMax":filteredStats = app.percTempMaxGreat(notFilteredArray, min);break;
 					case "PercTempMin":filteredStats = app.percTempMinGreat(notFilteredArray, min);break;
 					case "PercTempVariance":filteredStats = app.percTempVarGreat(notFilteredArray, min);break;
-					default: //campo non valido
+					default: throw new IllegalFieldException("Campo non valido: questa rotta ammette solo filtri con "
+							+ "campo : ReTempAvg, ReTempMax, ReTempMin, ReTempVariance, PercTempAvg, "
+							+ "PercTempMax, PercTempMin, PercTempVariance.");
 				}
 				break;
 				
@@ -99,7 +119,9 @@ public class StatisticsFilterManagement {
 					case "PercTempMax":filteredStats = app.percTempMaxLess(notFilteredArray, max);break;
 					case "PercTempMin":filteredStats = app.percTempMinLess(notFilteredArray, max);break;
 					case "PercTempVariance":filteredStats = app.percTempVarLess(notFilteredArray, max);break;
-					default: //campo non valido
+					default: throw new IllegalFieldException("Campo non valido: questa rotta ammette solo filtri con "
+							+ "campo : ReTempAvg, ReTempMax, ReTempMin, ReTempVariance, PercTempAvg, "
+							+ "PercTempMax, PercTempMin, PercTempVariance.");
 				} 
 				break;
 			
@@ -114,10 +136,12 @@ public class StatisticsFilterManagement {
 					case "PercTempMax":filteredStats = app.percTempMaxIncl(notFilteredArray, param[0], param[1]);break;
 					case "PercTempMin":filteredStats = app.percTempMinIncl(notFilteredArray, param[0], param[1]);break;
 					case "PercTempVariance":filteredStats = app.percTempVarIncl(notFilteredArray, param[0], param[1]);break;
-					default: //campo non valido
+					default: throw new IllegalFieldException("Campo non valido: questa rotta ammette solo filtri con "
+							+ "campo : ReTempAvg, ReTempMax, ReTempMin, ReTempVariance, PercTempAvg, "
+							+ "PercTempMax, PercTempMin, PercTempVariance.");
 				}
 				break;
-			default: //filtro non valido 
+			default: throw new IllegalOperatorException("Operatore non valido.", campo);
 		}
 		return filteredStats;
 	}

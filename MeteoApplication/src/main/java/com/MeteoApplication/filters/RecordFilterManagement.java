@@ -108,6 +108,7 @@ public class RecordFilterManagement {
 		String campo = "period",operatore="";
 		
 		JSONObject interno = (JSONObject)filtro.get(campo);
+		@SuppressWarnings("unchecked")
 		Iterator<String> iterator = interno.keySet().iterator();
 		
 		//Ottenimanto dell'operatore associato al campo
@@ -160,6 +161,7 @@ public class RecordFilterManagement {
 	}
 	
 	
+	@SuppressWarnings("unchecked")
 	private static Vector<Record> singleFilterApplicatorRotta6 (JSONObject filtro, Vector<Record> notFilteredArray)
 	  throws IllegalValueException, IllegalOperatorException, IllegalFieldException{
 		String campo="";
