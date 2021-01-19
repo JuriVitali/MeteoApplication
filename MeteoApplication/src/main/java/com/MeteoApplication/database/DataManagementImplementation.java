@@ -177,17 +177,13 @@ public class DataManagementImplementation implements DataManagement {
 	 * @throws InternalException 
 	 */
 	public Record getLiveData(long id) throws InternalException {
-		//effettua una chiamata all'api di Open-weather per scaricare i dati relativi alla temperatura attuale e li parsa popolando un 
-		//elemento di tipo record.Serve un metodo per ottenere la data attuale.
 		HttpURLConnection openConnection;
 		Record CityTempAtt = new Record();
 		JSONObject obj =null;
-		//RestTemplate restTemplate = new RestTemplate();
 		String result = "";
 		JSONParser parser = new JSONParser();
-		//result = restTemplate.getForObject("https://api.openweathermap.org/data/2.5/weather?id=" + id + "&units=metric&appid=cb240c9a23197aad47fd81d2660b6b8a", String.class);
 		try {
-			openConnection = (HttpURLConnection) new URL("ttps://api.openweathermap.org/data/2.5/weather?id=" + id + "&units=metric&appid=cb240c9a23197aad47fd81d2660b6b8a").openConnection();
+			openConnection = (HttpURLConnection) new URL("https://api.openweathermap.org/data/2.5/weather?id=" + id + "&units=metric&appid=cb240c9a23197aad47fd81d2660b6b8a").openConnection();
 			openConnection.setRequestMethod("GET");
 			InputStream in = openConnection.getInputStream();
 			String line = "";
