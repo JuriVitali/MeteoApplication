@@ -25,12 +25,30 @@ import com.MeteoApplication.model.Data;
 import com.MeteoApplication.model.Statistics;
 import com.MeteoApplication.util.DateOperations;
 
+/**
+ * Il controller contiene una serie di metodi che rispondono ciascuno ad una diversa rotta.
+ * Alcuni di essi fanno uso dell'interfaccia {@link com.MeteoApplication.database.DataManagement  DataManagement}, 
+ * mentre altri utilizzano il metodo parseBody della classe {@link com.MeteoApplication.filters.RecordFilterManagement  RecordFilterManagement}
+ * o della classe {@link com.MeteoApplication.filters.StatisticsFilterManagement  StatisticsFilterManagement}.
+ * 
+ * @author Juri Vitali
+ * 
+ */
 @RestController
 public class Controller {
 	
 	private DataManagement datamanagement = new  DataManagementImplementation();
 	
-	
+	/**
+	 * Il metodo getVectorMetadata risponde alla richiesta 
+	 * "metadata" e restituisce un Vector di tipo {@link com.MeteoApplication.model.Metadata  Metadata} 
+	 * contenente i metadati del programma.
+	 * Utilizza il metodo {@link com.MeteoApplication.database.DataManagement#getMetadata()  getMetadata}
+	 * dell'interfaccia DataManagement.
+	 * 
+	 * @return un Vector di tipo {@link com.MeteoApplication.model.Metadata  Metadata} 
+	 * contenente i metadati del programma.
+	 */
 	@RequestMapping(value = "metadata", method=RequestMethod.GET)
 	public Vector<Metadata> getVectorMetadata() {
 		return datamanagement.getMetadata();
@@ -38,6 +56,14 @@ public class Controller {
 	
 	
 	
+	/**
+	 * Il metodo getAllData risponde alla richiesta "data" e restituisce un Vector di tipo {@link com.MeteoApplication.model.Record  Record} 
+	 * contente tutti i dati raccolti sulle temperature.
+	 * Utilizza il metodo {@link com.MeteoApplication.database.DataManagement#getData()  getData} dell'interfaccia DataManagement.
+	 * 
+	 * @return un Vector di tipo {@link com.MeteoApplication.model.Record  Record}  contente tutti i dati 
+	 * raccolti sulle temperature
+	 */
 	@RequestMapping(value = "data", method=RequestMethod.GET)
 	public Vector<Record> getAllData() {
 		return datamanagement.getData();
@@ -45,6 +71,17 @@ public class Controller {
 	
 	
 	
+	/**
+	 * Il metodo getCityName risponde alla richiesta "getId" e restituisce un Vector di tipo 
+	 * {@link com.MeteoApplication.model.City  City} contenente nome e id delle città il cui nome contiene la stringa
+	 * passata come parametro.
+	 * Utilizza il metodo {@link com.MeteoApplication.database.DataManagement#getCities(String)  getCities} 
+	 * dell'interfaccia DataManagement.
+	 *  
+	 * @param sottostringa indica il nome o parte del nome della/e citta' di cui si vuole conoscere l'id.
+	 * @return un Vector di tipo {@link com.MeteoApplication.model.City  City} contenente nome e id delle città il cui 
+	 * nome contiene la stringa passata come parametro.
+	 */
 	@RequestMapping(value = "getId", method = RequestMethod.GET)
 	public Vector<City> getCityName(@RequestParam (name="name") String sottostringa) {
 		return datamanagement.getCities(sottostringa);
@@ -52,46 +89,92 @@ public class Controller {
 	
 	
 	
+	/**
+	 * Il metodo getStats, dati l'id di una città e un filtro su un periodo temporale, consente di ottenere le
+	 * statistiche sulle temperature registrate in tale citta' nel periodo selezionato.
+	 * 
+	 * @param id indica l'id della citta' di cui si vogliono ottenere le statistiche.
+	 * @param filtro rappresenta il filtro (formato JSON) che si vuole al periodo nel quale si vogliono calcolare le statistiche.
+	 * @return un oggetto di tipo {@link com.MeteoApplication.model.Statistics  Statistics}
+	 * @throws InvalidFilterException viene lanciata se la sintassi del filtro è errata
+	 * @throws IllegalValueException viene lanciata se ci sono valori non coerenti
+	 * @throws IllegalOperatorException viene lanciata se ad un campo viene associato un operatore non valido
+	 * @throws IllegalFieldException viene lanciata se viene immesso nel filtro un campo non valido
+	 * @throws InvalidParametersException se l'id non corrisponde a nessuna delle citta' disponibili
+	 */
 	@RequestMapping(value = "stats", method = RequestMethod.POST)    
 	public Statistics getStats(@RequestParam (name="id") long id, @RequestBody String filtro)
-	  throws InvalidFilterException, IllegalValueException, IllegalOperatorException, IllegalFieldException{
+	  throws InvalidFilterException, IllegalValueException, IllegalOperatorException, IllegalFieldException, InvalidParametersException{
 		
 		Vector<Record> vettoreFiltrato = new Vector<Record>(); 
-		for (Record r: DataManagement.listaDati) if(r.getId()==id) vettoreFiltrato.add(new Record(r));  //selezione dei record relativi alla città con id passato come parametro
+		
+		//selezione dei record relativi alla città con id passato come parametro
+		for (Record r: DataManagement.listaDati) if(r.getId()==id) vettoreFiltrato.add(new Record(r));  
 		String name=datamanagement.takeName(id);
+		
+		//controlla se l'id inserito corrisponde ad una delle citta' di cui sono disponibili le misurazioni
 		if (name == null) throw new InvalidParametersException ("L'id immesso non corrisponde ad alcuna città registrata.");
 		
-		vettoreFiltrato = RecordFilterManagement.parseBody(filtro, vettoreFiltrato, 4);  //filtraggio rispetto al periodo
+		//filtraggio rispetto al periodo
+		vettoreFiltrato = RecordFilterManagement.parseBody(filtro, vettoreFiltrato, 4);  
 		if (vettoreFiltrato.isEmpty()) return new Statistics ( id , "Nessuna misurazione nel periodo selezionato" , null);
-	
-		Statistics stats = new Statistics (id, name, vettoreFiltrato);   //si istanzia un oggetto contenente nome, id e statistiche della città
+		
+		//istanzia un oggetto contenente nome, id e statistiche della città (che vengono calcolate automaticamente in base alle misurazioni)
+		Statistics stats = new Statistics (id, name, vettoreFiltrato);   
 		return stats;
 	}
 	
 	
-	
+	/**
+	 * Il metodo liveTemp restituisce i dati in tempo reale sulla temperatura nella/e citta' cui corrispondono gli id passati.
+	 * Utilizza il metodo {@link com.MeteoApplication.database.DataManagement#getLiveData(long)  getLiveData} dell'interfaccia DataManagement.
+	 * 
+	 * @param filtro indica il filtro (formato JSON) sugli id delle citta' di cui si vogliono ottenere i dati
+	 * @return un array di tipo Record con i dati attuali sulla temperatura delle città selezionate
+	 * @throws InternalException viene lanciata se si verifica un problema nella chiamata all'API di OpenWeather, nella lettura della risposta di tale chiamata o nel parsing della risposta
+	 * @throws InvalidFilterException viene lanciata se la sintassi del filtro è errata
+	 * @throws IllegalValueException viene lanciata se ci sono valori non coerenti
+	 * @throws IllegalOperatorException viene lanciata se ad un campo viene associato un operatore non valido
+	 * @throws IllegalFieldException viene lanciata se viene immesso nel filtro un campo non valido
+	 */
 	@RequestMapping(value = "liveTemp", method = RequestMethod.POST) 
 	public Vector<Record> getTemps(@RequestBody String filtro) throws InternalException, 
 	  InvalidFilterException, IllegalValueException, IllegalOperatorException, IllegalFieldException {
 		
-		Vector<Record> vettoreFiltrato = RecordFilterManagement.parseBody(filtro, DataManagement.listaDati, 5);  //filtra record in base all'id
+		//filtra record in base all'id
+		Vector<Record> vettoreFiltrato = RecordFilterManagement.parseBody(filtro, DataManagement.listaDati, 5);  
 		Vector<City> cittaFiltrate = new Vector<City>();
-		for (Record v : vettoreFiltrato) cittaFiltrate.add(new City(v.getId(),v.getName()));    //popola il vettore cittaFiltrate con le città che rispondo ad un certo id
+		
+		//popola il vettore cittaFiltrate con le città che rispondo ad un certo id
+		for (Record v : vettoreFiltrato) cittaFiltrate.add(new City(v.getId(),v.getName()));    
 		Vector<Record> risposta = new Vector<Record>();
-		/*Per ogni citta' che soddisfa il filtro sull'id viene chiamato getLiveData che effettua una chiamata all'API
-		 *di OpenWeather e restituisce un Vector di Record contenente le informazioni desiderate
-		*/
+		
+		//Per ogni citta' che soddisfa il filtro sull'id viene chiamato getLiveData che effettua una chiamata all'API
+		//di OpenWeather e restituisce un Vector di Record contenente le informazioni desiderate
 		for (City c : cittaFiltrate) risposta.add(datamanagement.getLiveData(c.getId())); 
 		return risposta;
 	}
 	
 	
 	
+	/**
+	 * Il metodo CityFilter risponde alla richiesta "cities". Dato un filtro contenente valori sulla temperatura reale, percepita e
+	 * sul periodo , esso restituisce un array di tipo  {@link com.MeteoApplication.model.City  City} che contiene
+	 * le citta' che rispettano i vincoli immessi nel  periodo desiderato.
+	 * 
+	 * @param filtro consiste in un filtro (formato JSON) sulla temperatura, temperatura percepita e periodo
+	 * @return un array di tipo  {@link com.MeteoApplication.model.City  City} che contiene le citta' che rispettano i vincoli immessi nel  periodo desiderato.
+	 * @throws InvalidFilterException viene lanciata se la sintassi del filtro è errata
+	 * @throws IllegalValueException viene lanciata se ci sono valori non coerenti
+	 * @throws IllegalOperatorException viene lanciata se ad un campo viene associato un operatore non valido
+	 * @throws IllegalFieldException viene lanciata se viene immesso nel filtro un campo non valido
+	 */
 	@RequestMapping(value = "cities", method = RequestMethod.POST)  
 	public Vector<City> CityFilter(@RequestBody String filtro) throws InvalidFilterException,
 	  IllegalValueException, IllegalOperatorException, IllegalFieldException {
 		
-		Vector<Record> vettoreFiltrato = RecordFilterManagement.parseBody(filtro, DataManagement.listaDati, 6); //filtra il vettore con tutti i dati
+		//filtra il vettore con tutti i dati
+		Vector<Record> vettoreFiltrato = RecordFilterManagement.parseBody(filtro, DataManagement.listaDati, 6); 
 		
 		//si prendono le citta' che dispongono di misurazioni che rispettano tutti i filtri
 		Vector<City> cittaFiltrate = new Vector<City>();
@@ -100,7 +183,21 @@ public class Controller {
 	}
 	
 	
-	
+	/**
+	 * il metodo StatsFilter risponde alla chiamata "filterStats" e restituisce un array di tipo  
+	 * {@link com.MeteoApplication.model.City  City} contenente le citta' che rispettano i vincoli imposti sulle statistiche
+	 * calcolate in un periodo temporale scelto. 
+	 * 
+	 * @param inizio indica la data di inizio del periodo temporale su cui si vogliono calcolare le statistiche
+	 * @param fine indica la data di fine del periodo temporale su cui si vogliono calcolare le statistiche
+	 * @param filtro consiste in un filtro (formato JSON) contenente i vincoli sulle statistiche
+	 * @return un array di tipo {@link com.MeteoApplication.model.City  City} contenente le citta' che rispettano i vincoli imposti
+	 * @throws InvalidFilterException viene lanciata se la sintassi del filtro è errata
+	 * @throws IllegalValueException viene lanciata se ci sono valori non coerenti
+	 * @throws IllegalOperatorException viene lanciata se ad un campo viene associato un operatore non valido
+	 * @throws IllegalFieldException viene lanciata se viene immesso nel filtro un campo non valido
+	 * @throws InvalidParametersException se la data di inizio del periodo è successiva a quella di fine del periodo
+	 */
 	@RequestMapping(value = "filterStats", method = RequestMethod.POST)
 	public Vector<City> StatsFilter(@RequestParam (name ="periodStart") String inizio, @RequestParam (name = "periodEnd") String fine, 
 			@RequestBody String filtro) throws InvalidParametersException, InvalidFilterException,

@@ -2,7 +2,7 @@ package com.MeteoApplication.Exception;
 
 /**
  * Classe che rappresenta un'eccezione che viene lanciata quando il valore inserito dall'utente (tra i parametri o nel
- * body della richiesta) non è valido
+ * body della richiesta) non e' valido
  * 
  * @author Juri Vitali
  *

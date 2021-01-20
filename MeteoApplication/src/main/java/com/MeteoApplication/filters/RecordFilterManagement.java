@@ -18,7 +18,8 @@ import com.MeteoApplication.util.DateOperations;
 
 
 /**
- * RecordFilterManagement e' una classe che contiene metodi per gestire i filtri immessi dall'utente 
+ * RecordFilterManagement e' una classe che contiene metodi statici per filtrare un vettore di tipo 
+ * {@link com.MeteoApplication.model.Record  Record} in base a filtri immessi dall'utente. 
  * 
  * @author Juri Vitali
  * 
@@ -57,7 +58,7 @@ public class RecordFilterManagement {
 			filteredArray = andMultipleFilterApplicator(elencoFiltri, notFilteredArray, rotta);
 		}
 		
-		//verifica se è presente l'operatore logico and
+		//verifica se è presente l'operatore logico or
 		else if(body.containsKey("or")) {
 			JSONArray elencoFiltri = (JSONArray) body.get("or"); 
 			filteredArray = orMultipleFilterApplicator(elencoFiltri, notFilteredArray, rotta);
@@ -214,8 +215,8 @@ public class RecordFilterManagement {
 		
 		//Selezione del filtro
 		switch (campo) {
+		
 		case "temperature" : 
-			
 			switch(operatore) {
 			case "$gt": filteredArray = app.TempFilter_gt(notFilteredArray, (double) interno.get(operatore));break;
 			case "$lt": filteredArray = app.TempFilter_less(notFilteredArray, (double) interno.get(operatore));break;

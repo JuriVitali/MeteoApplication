@@ -15,7 +15,14 @@ import com.MeteoApplication.model.Record;
  */
 public interface DataManagement {
 	
+	/**
+	 * Campo che contiene il nome del file che contiene il dataset
+	 */
 	public String nomeFileDati = "Data.json";
+	
+	/**
+	 * Campo che contiene il nome del file che contiene la lista delle citta' di cui si hanno i dati sulle temperature
+	 */
 	public String nomeFileCitta = "CityList.json";
 	
 	/**
@@ -29,46 +36,43 @@ public interface DataManagement {
 	public static Vector<City>  elencoCitta = new Vector<City>();
 	
 	/**
-	 * Il metodo getMetadata popola e poi restituisce un Vector di tipo Metadata con i metadati 
+	 * Il metodo getMetadata popola e poi restituisce un Vector di tipo {@link com.MeteoApplication.model.Metadata  Metadata} con i metadati 
 	 * 
-	 * @return il Vector di tipo Metadata elencoMetadati contenente i metadati
+	 * @return il Vector di tipo {@link com.MeteoApplication.model.Metadata  Metadata} contenente i metadati dell'applicazione
 	 */
 	public Vector<Metadata> getMetadata();
 	
 	
 	/**
-	 * Il metodo getData restituisce il Vector di tipo Record listaDati contenente tutti i dati delle misurazioni
+	 * Il metodo getData restituisce un Vector di tipo {@link com.MeteoApplication.model.Record  Record} contenente tutti i dati delle misurazioni
 	 * 
-	 * @return il Vector di tipo Record listaDati contenente tutti i dati delle misurazioni 
+	 * @return il Vector di tipo {@link com.MeteoApplication.model.Record  Record} contenente tutti i dati delle misurazioni .
 	 */
 	public Vector<Record> getData();
 	
 	
 	/**
-	 * Il metodo downloadAndParseCities esegue una chiamata all'API di Dropbox per scaricare i dati delle misurazioni presenti sul file Data.json,
+	 * Il metodo downloadAndParseCities esegue una chiamata all'API di Dropbox per scaricare i dati delle misurazioni presenti sul 
+	 * file {@link com.MeteoApplication.database.DataManagement#nomeFileDati il cui nome e' contenuto in nomeFileDati},
 	 * memorizzato sull'account Dropbox.progettoesameoop@gmail.com
-	 * Inoltre viene eseguito un parse dei dati e popolato un Vector di tipo Record listaDati
-	 * @throws InternalException 
-	 * 
+	 * Inoltre viene eseguito un parse dei dati e popolato un Vector di tipo {@link com.MeteoApplication.model.Record  Record} 
 	 */
 	public void downloadAndParseData() ;
 	
 	/**
-	 * Il metodo downloadAndParseCities esegue una chiamata all'API di Dropbox per scaricare i dati delle città presenti sul file CityList.json,
-	 * memorizzato sull'account Dropbox.progettoesameoop@gmail.com
-	 * Inoltre viene eseguito un parse dei dati e popolato un Vector di tipo City elencoCittà
-	 * @throws InternalException 
-	 * 
+	 * Il metodo downloadAndParseCities esegue una chiamata all'API di Dropbox per scaricare i dati delle città presenti sul file 
+	 * {@link com.MeteoApplication.database.DataManagement#nomeFileCitta il cui nome e' contenuto in nomeFileCitta},memorizzato sull'account Dropbox.progettoesameoop@gmail.com
+	 * Inoltre viene eseguito un parse dei dati e popolato un Vector di tipo {@link com.MeteoApplication.model.City  City} 
 	 */
 	public void downloadAndParseCities() ;
 	
 	/**
      * Il metodo getCities prende come argomento una stringa che deve essere ricercata e in base a essa
-     * filtra il Vector di tipo City elencoCitta.
-     * Infine restituisce un Vector di tipo City il cui nome delle città contiene la sottostringa.
+     * filtra il Vector di tipo {@link com.MeteoApplication.model.City  City} contenente tutte le citta' disponibili.
+     * Infine restituisce un Vector di tipo {@link com.MeteoApplication.model.City  City} il cui nome delle città contiene la sottostringa.
      * 
-     * @param sottostringa stringa che deve essere ricercata
-     * @return restituisce un Vector di tipo City il cui nome delle città contiene la sottostringa
+     * @param sottostringa/stringa che deve essere ricercata
+     * @return restituisce un Vector di tipo {@link com.MeteoApplication.model.City  City} il cui nome delle città contiene la sottostringa
      */
 	public  Vector<City> getCities(String sottostringa);
 	
@@ -83,14 +87,14 @@ public interface DataManagement {
 	
 	/**
 	 * Il metodo getLiveData effettua una chiamata all' API di OpenWeather per l' id che gli viene passato 
-	 * come argomento. Inoltre popola un vettore di tipo Record con i dati restituiti dall'API mediante la chiamata.
-	 * All'interno di questo metodo viene lanciato il metodo ottieniDataAtt.
+	 * come argomento. Inoltre popola un vettore di tipo {@link com.MeteoApplication.model.Record  Record} con i dati restituiti dall'API mediante la chiamata.
+	 * All'interno di questo metodo viene lanciato il metodo {@link com.MeteoApplication.util.DateOperations#ottieniDataAtt(long) ottieniDataAtt }
 	 * 
 	 * @param id indica l' id della citta' di cui si vogliono conoscere i dati sulle temperature.
 	 * @return un oggetto Vector di tipo Record con i dati sulle temperature della citta' in base all' id passato come argomento.
-	 * @throws InternalException 
-	 * @see model.City
-	 * @see model.Record
+	 * @throws InternalException se si verifica un'errore nella chiamata all'API o nella lettura o nel parsing della risposta.
+	 * @see com.MeteoApplication.model.City
+	 * @see com.MeteoApplication.model.Record
 	 */
 	public Record getLiveData(long id) throws InternalException;
 	

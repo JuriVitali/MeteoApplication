@@ -1,0 +1,8 @@
+com.MeteoApplication
+com.MeteoApplication.controller
+com.MeteoApplication.database
+com.MeteoApplication.Exception
+com.MeteoApplication.filters
+com.MeteoApplication.model
+com.MeteoApplication.stats
+com.MeteoApplication.util

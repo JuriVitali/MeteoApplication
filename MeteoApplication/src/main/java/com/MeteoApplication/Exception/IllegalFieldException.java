@@ -1,7 +1,7 @@
 package com.MeteoApplication.Exception;
 
 /**
- * Classe che rappresenta un'eccezione lanciata quando il campo inserito in un filtro non è valido per la rotta
+ * Classe che rappresenta un'eccezione lanciata quando il campo inserito in un filtro non e' valido per la rotta
  * 
  * @author Juri Vitali
  *

@@ -3,7 +3,7 @@ package com.MeteoApplication.stats;
 import java.util.Vector;
 
 /**
- * BasicsStats è un'interfaccia che contiene metodi per il calcolo di statistiche riguardanti un Vector di tipo Double
+ * BasicsStats e' un'interfaccia che contiene metodi per il calcolo di statistiche riguardanti un Vector di tipo Double
  * 
  * @author Juri Vitali
  * @author Roberto Palladino

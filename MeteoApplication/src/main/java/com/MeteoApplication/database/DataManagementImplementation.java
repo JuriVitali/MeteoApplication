@@ -55,26 +55,33 @@ public class DataManagementImplementation implements DataManagement {
 		return elencoMetadati;
 	}
 	
+	
+	
 	/**
 	 * {@inheritDoc}
 	 */
 	public Vector<Record> getData() {
-		return listaDati;
+		return listaDati;   //restituisce il vettore popolato con tutti gli elementi del dataset
 	}
 	
+	
+	
 	/**
-	 * {@inheritDoc}
-	 * @throws InternalException 
+	 * {@inheritDoc} 
 	 */
 	public void downloadAndParseData() {
 		String data = "";
 		HttpURLConnection openConnection;
+		
+		//chiamata all'API di Dropbox
 		try {
 			openConnection = (HttpURLConnection) new URL("https://content.dropboxapi.com/2/files/download").openConnection();
 			openConnection.setRequestMethod("POST"); 
 			openConnection.setRequestProperty("Authorization", "Bearer shQTHaqinxoAAAAAAAAAAUg4F3FzXp7tj5wWFN8TvnYSzuGBhfgeytEU4CoQ3RTz");
 			openConnection.setRequestProperty("Dropbox-API-Arg", "{ \"path\" : \"/"+ nomeFileDati +"\"}");
 			InputStream in = openConnection.getInputStream();
+			
+			//lettura della risposta
 			try {
 				int next;
 				char c;
@@ -95,6 +102,8 @@ public class DataManagementImplementation implements DataManagement {
 			System.out.println("Errore nella chiamata all'API di Dropbox.");
 		}
 		Data date = new Data(0,0,0);
+		
+		//Parsing della risposta
 		try {
 		JSONObject obj =null;
 		JSONParser parser = new JSONParser();
@@ -112,13 +121,16 @@ public class DataManagementImplementation implements DataManagement {
 	    } 
 	}
 	
+	
+	
 	/**
 	 * {@inheritDoc}
-	 * @throws InternalException 
 	 */
 	public void downloadAndParseCities() {
 		HttpURLConnection openConnection;
 		String data = "";
+		
+		//chiamata all'API di Dropbox
 		try {
 			openConnection = (HttpURLConnection) new URL("https://content.dropboxapi.com/2/files/download").openConnection();
 			openConnection.setRequestMethod("POST");
@@ -126,6 +138,8 @@ public class DataManagementImplementation implements DataManagement {
 			openConnection.setRequestProperty("Dropbox-API-Arg", "{ \"path\": \"/CityList.json\"}");
 			InputStream in = openConnection.getInputStream();
 			String line = "";
+			
+			//lettura della risposta
 			try {
 				InputStreamReader inR = new InputStreamReader( in );
 				BufferedReader buf = new BufferedReader( inR );
@@ -138,6 +152,8 @@ public class DataManagementImplementation implements DataManagement {
 		} catch (IOException e) {
 			System.out.println("Errore nella chiamata all'API di Dropbox.");
 		} 
+		
+		//Parsing della risposta
 		try {
 			JSONParser parser = new JSONParser();
 			JSONArray a = (JSONArray) parser.parse(data);
@@ -150,19 +166,20 @@ public class DataManagementImplementation implements DataManagement {
 		}
 	}
 	
+	
+	
 	/**
 	 * {@inheritDoc}
 	 */
 	public Vector<City> getCities(String sottostringa) {
-		/*prende come parametro una sottostringa, filtra in base ad essa il vector elenco città.
-		 *  Infine restituisce un Vector di tipo City il cui nome delle città contiene la sottostringa.
-     	*/
 		Vector<City> cittaTrovata = new Vector<City>();
 		for(City citta : elencoCitta) {
 			if ( citta.getName().contains(sottostringa) == true) cittaTrovata.add(new City(citta.getId(),citta.getName()));
 		}
 		return cittaTrovata;
 	}
+	
+	
 	
 	/**
 	 * {@inheritDoc}
@@ -174,7 +191,6 @@ public class DataManagementImplementation implements DataManagement {
 	
 	/**
 	 * {@inheritDoc}
-	 * @throws InternalException 
 	 */
 	public Record getLiveData(long id) throws InternalException {
 		HttpURLConnection openConnection;
@@ -182,11 +198,15 @@ public class DataManagementImplementation implements DataManagement {
 		JSONObject obj =null;
 		String result = "";
 		JSONParser parser = new JSONParser();
+		
+		//Chiamata all'API di OpenWeather
 		try {
 			openConnection = (HttpURLConnection) new URL("https://api.openweathermap.org/data/2.5/weather?id=" + id + "&units=metric&appid=cb240c9a23197aad47fd81d2660b6b8a").openConnection();
 			openConnection.setRequestMethod("GET");
 			InputStream in = openConnection.getInputStream();
 			String line = "";
+			
+			//lettura della risposta
 			try {
 				InputStreamReader inR = new InputStreamReader( in );
 				BufferedReader buf = new BufferedReader( inR );
@@ -199,6 +219,8 @@ public class DataManagementImplementation implements DataManagement {
 		} catch (IOException e) {
 			throw new InternalException("Errore nella chiamata all'API di OpenWeather");
 		} 
+		
+		//parsing della risposta
 		try  {
 			obj = (JSONObject) parser.parse(result);
 			long unixSeconds = (long) obj.get("dt");

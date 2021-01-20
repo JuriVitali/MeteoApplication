@@ -1,11 +1,19 @@
 package com.MeteoApplication.model;
 
+/**
+ * Classe che descrive un metadato
+ * 
+ * @author Juri Vitali
+ * @author Nicola Sebastianelli
+ * @author Roberto Palladino
+ *
+ */
 public class Metadata {
 	String alias;
 	String sourceField;
 	String type;
 	
-	
+	//costruttore
 	public Metadata(String alias, String sourceField, String type) {
 		this.alias = alias;
 		this.sourceField = sourceField;

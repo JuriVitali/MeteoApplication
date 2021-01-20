@@ -1,5 +1,14 @@
 package com.MeteoApplication.model;
 
+/**
+ * Statistics e' una classe che descrive le statistiche sulla temperatura calcolate su un certo periodo di 
+ * tempo e riguardanti una determinata citta'.
+ * La classe Statistics estende la classe {@link com.MeteoApplication.model.City  City}.
+ * 
+ * @author Juri Vitali
+ * @author Nicola Sebastianelli
+ * @author Roberto Palladino
+ */
 import java.util.Vector;
 
 import com.MeteoApplication.stats.StatsCalculator;
@@ -14,7 +23,14 @@ public class Statistics extends City{
 	private double percTempMax;
 	private double percTempVariance;
 	
-	
+	/**
+	 * Costruttore che calcola automaticamente le statistiche sulla temperatura della citta' passatagli.
+	 * Per eseguire tali calcoli si utilizza un oggetto della classe {@link com.MeteoApplication.stats.StatsCalculator Stats Calculator}
+	 * 
+	 * @param id indica l'id della citta'
+	 * @param name indica il nome della citta'
+	 * @param misurazioni consiste nel Vector di tipo {@link com.MeteoApplication.model.Record  Record} sul quale si vogliono calcolare le statistiche.
+	 */
 	public Statistics(long id, String name, Vector<Record> misurazioni) {
 		super(id, name);
 		StatsCalculator calculator = new StatsCalculator(misurazioni);
@@ -28,7 +44,11 @@ public class Statistics extends City{
 		percTempVariance = calculator.calculatePercTempVariance();
 	}
 	
-	//costruttore copia
+	/**
+	 * Costruttore copia che costruisce un oggetto di tipo Statistics identico ad uno passatogli come parametro.
+	 * 
+	 * @param s oggetto di tipo Statistics che si vuole copiare
+	 */
 	public Statistics(Statistics s) {
 		super(s.getId(), s.getName());
 		this.realTempAvg=s.getRealTempAvg();

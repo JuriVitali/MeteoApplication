@@ -6,7 +6,9 @@ import com.MeteoApplication.model.Record;
 
 import java.util.Vector;
 
+//interfaccia che racchiude tutti i metodi per applicare i filtri
 interface FiltersApplication {
+	
 	//filtri su data
 	Vector<Record> DateFilter_gte(Vector<Record> v, Data param);
 	Vector<Record> DateFilter_gt(Vector<Record> v, Data param);
@@ -23,8 +25,8 @@ interface FiltersApplication {
 	Vector<Record> TempPerFilter_less(Vector<Record> record, double TempPar);  
 	Vector<Record> TempPerFilter_bt(Vector<Record> record, double TempPar1, double TempPar2);  
 	
-	//filtri sulle statistiche
 	
+	//filtri sulle statistiche
 	//compreso
 	Vector<Statistics> reTempAvgIncl (Vector<Statistics> v, double min, double max);
 	Vector<Statistics> reTempMinIncl (Vector<Statistics> v, double min, double max);
@@ -55,6 +57,7 @@ interface FiltersApplication {
 	Vector<Statistics> percTempMaxGreat (Vector<Statistics> v, double min);
 	Vector<Statistics> percTempVarGreat (Vector<Statistics> v, double min);
 
+	
 	//filtro su id
 	Vector<Record> idFilter_eq(Vector<Record> v,long param);
 

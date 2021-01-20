@@ -4,6 +4,12 @@ import java.time.Instant;
 
 import org.springframework.http.HttpStatus;
 
+/**
+ * Classe che costituisce il modello della risposta ricevuta dall'utente nel caso del verificarsi di un'eccezione
+ * 
+ * @author Juri Vitali
+ * 
+ */
 public class ExceptionModel {
 	
 	private final HttpStatus httpstatus;

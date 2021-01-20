@@ -1,5 +1,14 @@
 package com.MeteoApplication.model;
 
+/**
+ * Classe che descrive una misurazione della temperatura avvenuta in una data citta'.
+ * Record e' un'estensione della classe {@link com.MeteoApplication.model.City  City}.
+ * 
+ * @author Juri Vitali
+ * @author Nicola Sebastianelli
+ * @author Roberto Palladino
+ * @see com.MeteoApplication.model.Data
+ */
 public class Record extends City{
 	private Data date;
 	private double temperature;
@@ -7,7 +16,7 @@ public class Record extends City{
 	private double tempMax;
 	private double tempMin;
 
-
+	//Costruttore senza parametri
 	public Record() {
 		super(0, "");
 		this.date = new Data(0,0,0);
@@ -17,6 +26,17 @@ public class Record extends City{
 		this.tempMin = 0;
 	}
 	
+	/**
+	 * Costruttore
+	 * 
+	 * @param id indica l'id della citta'
+	 * @param name indica il nome della citta'
+	 * @param date indica la data in cui e' avvenuta la misurazione
+	 * @param temperature indica la temperatura reale media registrata
+	 * @param tempPer indica la temperatura percepita registrata
+	 * @param tempMax indica la temperatura reale registrata nel punto piu' caldo della citta'
+	 * @param tempMin indica la temperatura registrata nel punto piu' freddo della citta'
+	 */
 	public Record(long id, String name, Data date, double temperature, double tempPer, double tempMax, double tempMin) {
 		super(id, name);
 		this.date = date;
@@ -25,7 +45,12 @@ public class Record extends City{
 		this.tempMax = tempMax;
 		this.tempMin = tempMin;
 	}
-
+	
+	 /**
+	  * Costruttore copia che costruisce un oggetto Record identico a quello che viene passato
+	  * 
+	  * @param r oggetto di tipo -record che si vuole copiare
+	  */
 	public Record(Record r) {
 		super(r.getId(),r.getName());
 		this.setData(r.getData());
@@ -73,12 +98,6 @@ public class Record extends City{
 
 	public void setTempMin(double tempMin) {
 		this.tempMin = tempMin;
-	}
-
-	@Override
-	public String toString() {
-		return "Record [date=" + date + ", temperature=" + temperature + ", tempPer=" + tempPer + ", tempMax=" + tempMax
-				+ ", tempMin=" + tempMin + "]";
 	}
 	
 	

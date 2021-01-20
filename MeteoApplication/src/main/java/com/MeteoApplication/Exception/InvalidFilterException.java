@@ -1,5 +1,11 @@
 package com.MeteoApplication.Exception;
 
+/**
+ * InvalidFilterException e' un'eccezione che viene lanciata quando un filtro non e' valido (per qualsiasi motivo)
+ * 
+ * @author Juri Vitali
+ *
+ */
 public class InvalidFilterException extends RuntimeException{
 	
 	private static final long serialVersionUID = 7L;

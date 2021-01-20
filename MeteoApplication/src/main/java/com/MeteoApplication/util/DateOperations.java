@@ -70,29 +70,49 @@ public class DateOperations {
 		return giorno;
 	}
 	
-
+    /**
+     * Metodo che confronta due date (due oggetti di tipo {@link com.MeteoApplication.model.Data  Data} e restituisce:
+     * -true se sono uguali;
+     * -false se sono diverse.
+     * 
+     * @param data1 prima data che si vuole confrontare (di tipo {@link com.MeteoApplication.model.Data  Data}).
+     * @param data2 seconda data che si vuole confrontare (di tipo {@link com.MeteoApplication.model.Data  Data}).
+     * @return true se le date sono uguali, false se sono diverse.
+     */
     public static boolean DateUguali(Data data1, Data data2) {
     	if(data1.getAnno() == data2.getAnno() && data1.getMese() == data2.getMese() && data1.getGiorno() == data2.getGiorno()) return true;
     	return false;
     }
     
-    
+    /**
+     * confrontaDate e' un metodo che confronta due date e determina quale delle due viene prima dell'altra (o eventualmente 
+     * se esse sono uguali).
+     * 
+     * @param data1 prima data che si vuole confrontare (di tipo {@link com.MeteoApplication.model.Data  Data}).
+     * @param data2 seconda data che si vuole confrontare (di tipo {@link com.MeteoApplication.model.Data  Data}).
+     * @return il metodo ritorna: 1 se la prima e' antecedente alla seconda, 0 se sono uguali e -1 se la prima e' successiva alla seconda.
+     */
     public static int confrontaDate(Data data1, Data data2) {
     	if(data1.getAnno() < data2.getAnno()) return 1;
     	if(data1.getAnno() > data2.getAnno()) return -1;
+    	
     	//Se arriva qui l'anno è lo stesso
     	if(data1.getMese() < data2.getMese()) return 1;
     	if(data1.getMese() > data2.getMese()) return -1;
+    	
     	//Se arriva qui anche il mese è lo stesso
     	if(data1.getGiorno() < data2.getGiorno()) return 1;
     	if(data1.getGiorno() > data2.getGiorno()) return -1;
+    	
+    	//Se il flusso del programma arriva qui significa che sono uguali
     	return 0;
     }
     
     
     /**
      * Il metodo ottieniDataAtt prende come argomento una data in formato unix e la converte in formato "yyyy-MM-dd".
-     * Inoltre popola un oggeto di tipo Data con anno , mese e giorno relativi alla data che è stata convertita.
+     * Inoltre popola un oggeto di tipo {@link com.MeteoApplication.model.Data  Data} con anno , mese e giorno relativi 
+     * alla data che è stata convertita.
      *  
      * @param unixSeconds data in formato unix
      * @return un oggeto di tipo Data
@@ -101,7 +121,7 @@ public class DateOperations {
 		Data data = new Data(0,0,0);
 		Date date = new Date(unixSeconds*1000L); 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd "); 
-		sdf.setTimeZone(TimeZone.getTimeZone("Italy/Rome")); 
+		sdf.setTimeZone(TimeZone.getTimeZone("Italy/Rome")); //definisce il fuso orario
 		String formattedDate = sdf.format(date);
 		data.setAnno(DateOperations.getAnno(formattedDate));
 		data.setMese(DateOperations.getMese(formattedDate));

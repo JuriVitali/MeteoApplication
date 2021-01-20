@@ -1,7 +1,7 @@
 package com.MeteoApplication.Exception;
 
 /**
- * Classe che rappresenta un'eccezione che viene lanciata quando l'operatore inserito in un filtro non è
+ * Classe che rappresenta un'eccezione che viene lanciata quando l'operatore inserito in un filtro non e'
  * valido o non è valido per quel campo
  * 
  * @author Juri Vitali
