@@ -18,11 +18,11 @@ Il dataset attualmente disponibile contiene informazioni sulle temperature regis
 L'applicazione **MeteoApplication** consente al client di ottenere informazioni sulla temperatura e sulle sue statistiche attraverso sette diverse rotte. 
 Quattro di esse consentono di applicare un filtro in formato JSON che deve avere la seguente forma:
 
->__{"<campo>": {"<operatore>": <dato>} }__
+>__{"campo": {"operatore": dato} }__
 
 Nel caso in cui si voglia applicare filtri multipli è possibile farlo specificando nel body della richiesta un oggetto JSON con la seguente struttura:
 
-  >__{ "<operatore logico>": [{filtro1},{filtro2},...] }__
+  >__{ "operatore logico" : [{filtro1},{filtro2},...] }__
 
 L'operatore logico ("and" o "or") è ammesso solamente all'inizio del filtro, ossia non può essere innestato.
 
