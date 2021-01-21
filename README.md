@@ -63,3 +63,41 @@ Rotta che consente di ottenere gli id delle città che nel loro nome contengono 
 
 Richiesta che consente di ottenere le statistiche sulle temperature relative alla città il cui id è Id. Tale rotta ammette un filtro sul periodo in cui vengono calcolate le statistiche.
 Campi disponibili per il filtraggio: **"period"**.
+
+## Sviluppo dell'Applicazione
+#### Diagramma dei Casi d'Uso
+![NewModel Use Case Diagram](https://user-images.githubusercontent.com/75090467/105073349-3e76f400-5a87-11eb-8e7a-d636d19c8b9f.jpg)
+
+### Package
+![Package Hierarchy](https://user-images.githubusercontent.com/75090467/105076468-623c3900-5a8b-11eb-9f51-5ba25a6ad193.jpg)
+
+#### Diagramma delle Classi
+* ##### Package com.MeteoApplication
+    ![main](https://user-images.githubusercontent.com/75090467/105213765-65006200-5b4f-11eb-853a-3154dda9b7f1.PNG)
+
+* ##### Package com.MeteoAppApplication.model
+     ![com model Class Diagram](https://user-images.githubusercontent.com/75090467/105073730-b9400f00-5a87-11eb-9121-c7366467b537.jpg)
+
+* ##### Package com.MeteoApplication.database
+    ![com database Class Diagram](https://user-images.githubusercontent.com/75090467/105074753-17212680-5a89-11eb-9982-83fee4ef00fb.jpg)
+
+* ##### Package com.MeteoAppApplication.controller
+    ![controller](https://user-images.githubusercontent.com/75090467/105213032-75fca380-5b4e-11eb-9b0d-b68703219865.PNG)
+
+* ##### Package com.MeteoApplication.filters
+    ![com filter Class Diagram](https://user-images.githubusercontent.com/75090467/105073010-bf81bb80-5a86-11eb-99cc-41d8e33bd24e.jpg)
+
+* ##### Package com.MeteoApplication.stats
+    ![com stats Class Diagram](https://user-images.githubusercontent.com/75090467/105208114-9e819f00-5b48-11eb-8ecc-b2034ca2363d.jpg)
+
+* ##### Package com.MeteoApplication.util
+    ![dateoperation](https://user-images.githubusercontent.com/75090467/105212673-0c7c9500-5b4e-11eb-972c-a1b4ed46e6b3.PNG)
+
+
+* ##### Package com.MeteoApplication.Exception
+![com MeteoApplication Exception Class Diagram3](https://user-images.githubusercontent.com/75090467/105078753-be548c80-5a8e-11eb-9674-077dfeab4b34.jpg)
+
+## Autori
+* ##### Vitali Juri
+* ##### Sebastianelli Nicola
+* ##### Palladino Roberto
