@@ -64,6 +64,7 @@ Rotta che consente di ottenere gli id delle città che nel loro nome contengono 
 Richiesta che consente di ottenere le statistiche sulle temperature relative alla città il cui id è Id. Tale rotta ammette un filtro sul periodo in cui vengono calcolate le statistiche.
 Campi disponibili per il filtraggio: **"period"**.
 Esempio:
+
 ![stats](https://user-images.githubusercontent.com/75083712/105420791-48445700-5c41-11eb-9ba4-cb497ad57770.jpg)
 
 > **POST /liveTemp**
@@ -71,6 +72,7 @@ Esempio:
 Rotta che ammette un filtro sull'id e restituisce i dati attuali sulle temperature registrate nelle città il cui id rispetta i vincoli imposti dall'utente.
 Campi disponibili per il filtraggio: **"id"**.
 Esempio:
+
 ![liveTemp](https://user-images.githubusercontent.com/75083712/105420797-4aa6b100-5c41-11eb-8a26-a805af6c7630.jpg)
 
 > **POST /cities** 
@@ -78,6 +80,7 @@ Esempio:
 Rotta che permette all'utente di inserire un filtro contenente vincoli su temperatura, temperatura percepita e periodo e restituisce le città in cui in tale periodo si sono registrati almeno una volta valori che rispettano tali parametri.
 Campi disponibili per il filtraggio: **"period"**,**"temperature"**,**"tempPer"**.
 Esempio:
+
 ![cities](https://user-images.githubusercontent.com/75083712/105420814-5003fb80-5c41-11eb-8622-d94fabfffd75.jpg)
 
 In tale esempio l'applicazione restituisce le città in dal 17-01-2021 al momento dell'ultima misurazione effettuata si è registrata almeno una volta un temperatura inferiore a -6.0 gradi Celsius.
@@ -87,6 +90,7 @@ In tale esempio l'applicazione restituisce le città in dal 17-01-2021 al moment
 Questa rotta consente di inserire un filtro su varie statistiche (riguardanti la temperatura) e restituisce l'elenco delle città le cui statistiche, calcolate tra "data1" e "data2" rispettano tale filtro.
 Campi disponibili per il filtraggio: **"ReTempAvg"**,**"ReTempMax"**,**"ReTempMin"**,**"ReTempVariance"**,**"PercTempAvg"**,**"PercTempMax"**,**"PercTempMin"**,**"PercTempVariance"**.
 Esempio:
+
 ![filterStats](https://user-images.githubusercontent.com/75083712/105420818-51cdbf00-5c41-11eb-91ed-0f6b2300c1ff.jpg)
 
 ### **Sviluppo dell'Applicazione**
