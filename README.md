@@ -63,6 +63,27 @@ Rotta che consente di ottenere gli id delle città che nel loro nome contengono 
 
 Richiesta che consente di ottenere le statistiche sulle temperature relative alla città il cui id è Id. Tale rotta ammette un filtro sul periodo in cui vengono calcolate le statistiche.
 Campi disponibili per il filtraggio: **"period"**.
+Esempio:
+
+> **POST /liveTemp**
+
+Rotta che ammette un filtro sull'id e restituisce i dati attuali sulle temperature registrate nelle città il cui id rispetta i vincoli imposti dall'utente.
+Campi disponibili per il filtraggio: **"id"**.
+Esempio:
+
+> **POST /cities** 
+
+Rotta che permette all'utente di inserire un filtro contenente vincoli su temperatura, temperatura percepita e periodo e restituisce le città in cui in tale periodo si sono registrati almeno una volta valori che rispettano tali parametri.
+Campi disponibili per il filtraggio: **"period"**,**"temperature"**,**"tempPer"**.
+Esempio:
+
+In tale esempio l'applicazione restituisce le città in dal 17-01-2021 al momento dell'ultima misurazione effettuata si è registrata almeno una volta un temperatura inferiore a -6.0 gradi Celsius.
+
+> **POST /filterStats?periodStart="data1"&periodEnd="data2"**
+
+Questa rotta consente di inserire un filtro su varie statistiche (riguardanti la temperatura) e restituisce l'elenco delle città le cui statistiche, calcolate tra "data1" e "data2" rispettano tale filtro.
+Campi disponibili per il filtraggio: **"ReTempAvg"**,**"ReTempMax"**,**"ReTempMin"**,**"ReTempVariance"**,**"PercTempAvg"**,**"PercTempMax"**,**"PercTempMin"**,**"PercTempVariance"**.
+Esempio:
 
 ## Sviluppo dell'Applicazione
 #### Diagramma dei Casi d'Uso
