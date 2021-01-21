@@ -44,3 +44,22 @@ La seguente tabella mostra tutti i campi che possono essere filtrati e gli opera
 | PercTempVariance|Varianza della temperatura percepita| $gt, $lt, $bt|
 
 __Nota__ : mentre le temperature consistono in numeri a virgola mobile, il valore della data deve essere inserito in una stringa e deve avere il formato aaaa-mm-gg.
+
+#### **Richieste disponibili**
+Il client può ottenere i dati desiderati attraverso le seguenti richieste:
+> **GET /metadata**
+
+Questa richiesta consente di ottenere i metadati riguardanti gli oggetti restituiti dall'applicazione.
+
+> **GET /data**
+
+Rotta con cui si può visualizzare l'intero dataset.
+
+> **GET /getId?name="sottostringa"**
+
+Rotta che consente di ottenere gli id delle città che nel loro nome contengono "sottostringa".
+
+> **POST /stats?id=Id**
+
+Richiesta che consente di ottenere le statistiche sulle temperature relative alla città il cui id è Id. Tale rotta ammette un filtro sul periodo in cui vengono calcolate le statistiche.
+Campi disponibili per il filtraggio: **"period"**.
