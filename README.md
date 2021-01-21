@@ -148,6 +148,12 @@ Esempio:
 * #### POST/filterStats
 ![statsFilter sequence diagram](https://user-images.githubusercontent.com/75083712/105418720-e0404180-5c3d-11eb-8810-7d3222bad38d.jpg)
 
+# Software Utilizzati
+* [Eclipse](https://www.eclipse.org/) : ambiente di sviluppo
+* [Spring Boot](https://spring.io/) : framework per sviluppo applicazioni Java
+* [Maven](https://maven.apache.org/) :  strumento di gestione di progetti
+* [JUNIT5](https://junit.org/junit5/) : framework di unit testing per applicazioni Java
+
 ## Autori
 ##### Vitali Juri : Schedulatore, implementato il Controller, i gestori dei filtri, classi per la gestione delle eccezioni, filtri, UML Sequence Diagram
 ##### Sebastianelli Nicola : Schedulatore, implementato le classi DataManagement ,DataManagementImplementation e DateOperations, test Junit, UML Class Diagram
