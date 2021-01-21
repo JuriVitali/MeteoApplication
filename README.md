@@ -140,7 +140,7 @@ Esempio:
 * #### POST/filterStats
 ![statsFilter sequence diagram](https://user-images.githubusercontent.com/75083712/105418720-e0404180-5c3d-11eb-8810-7d3222bad38d.jpg)
 
-## **Autori**
-* ##### **Vitali Juri**
-* ##### **Sebastianelli Nicola**
-* ##### **Palladino Roberto**
+## Autori
+* ##### Vitali Juri : Schedulatore, implementato il Controller, i gestori dei filtri, classi per la gestione delle eccezioni, filtri, UML Sequence Diagram
+* ##### Sebastianelli Nicola : Schedulatore, implementato le classi DataManagement ,DataManagementImplementation e DateOperations, test Junit, UML Class Diagram
+* ##### Palladino Roberto : implementazione filtri, test Junit, implementato StatsCalculator e BasicStatsCalculator , UML Use Case Diagram
