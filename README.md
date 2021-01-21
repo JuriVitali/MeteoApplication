@@ -85,7 +85,7 @@ Questa rotta consente di inserire un filtro su varie statistiche (riguardanti la
 Campi disponibili per il filtraggio: **"ReTempAvg"**,**"ReTempMax"**,**"ReTempMin"**,**"ReTempVariance"**,**"PercTempAvg"**,**"PercTempMax"**,**"PercTempMin"**,**"PercTempVariance"**.
 Esempio:
 
-## Sviluppo dell'Applicazione
+### **Sviluppo dell'Applicazione**
 #### Diagramma dei Casi d'Uso
 ![NewModel Use Case Diagram](https://user-images.githubusercontent.com/75090467/105073349-3e76f400-5a87-11eb-8e7a-d636d19c8b9f.jpg)
 
