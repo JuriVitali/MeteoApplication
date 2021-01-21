@@ -26,7 +26,7 @@ Nel caso in cui si voglia applicare filtri multipli è possibile farlo specifica
 
 L'operatore logico ("and" o "or") è ammesso solamente all'inizio del filtro, ossia non può essere innestato.
 
-#### **Lista degli operatori applicabili per ogni campo**
+### **Lista degli operatori applicabili per ogni campo**
 La seguente tabella mostra tutti i campi che possono essere filtrati e gli operatori che è possibile applicare a ciascuno di essi. 
 |  Campo  |  Descrizione  |  Operatori disponibili  |
 |---------|---------------|-------------------------|
@@ -45,7 +45,7 @@ La seguente tabella mostra tutti i campi che possono essere filtrati e gli opera
 
 __Nota__ : mentre le temperature consistono in numeri a virgola mobile, il valore della data deve essere inserito in una stringa e deve avere il formato aaaa-mm-gg.
 
-#### **Richieste disponibili**
+### **Richieste disponibili**
 Il client può ottenere i dati desiderati attraverso le seguenti richieste:
 > **GET /metadata**
 
@@ -86,13 +86,13 @@ Campi disponibili per il filtraggio: **"ReTempAvg"**,**"ReTempMax"**,**"ReTempMi
 Esempio:
 
 ### **Sviluppo dell'Applicazione**
-#### Diagramma dei Casi d'Uso
+### Diagramma dei Casi d'Uso
 ![NewModel Use Case Diagram](https://user-images.githubusercontent.com/75090467/105073349-3e76f400-5a87-11eb-8e7a-d636d19c8b9f.jpg)
 
 ### Package
 ![Package Hierarchy](https://user-images.githubusercontent.com/75090467/105076468-623c3900-5a8b-11eb-9f51-5ba25a6ad193.jpg)
 
-#### Diagramma delle Classi
+### Diagramma delle Classi
 * ##### Package com.MeteoApplication
     ![main](https://user-images.githubusercontent.com/75090467/105213765-65006200-5b4f-11eb-853a-3154dda9b7f1.PNG)
 
@@ -114,11 +114,33 @@ Esempio:
 * ##### Package com.MeteoApplication.util
     ![dateoperation](https://user-images.githubusercontent.com/75090467/105212673-0c7c9500-5b4e-11eb-972c-a1b4ed46e6b3.PNG)
 
-
 * ##### Package com.MeteoApplication.Exception
 ![com MeteoApplication Exception Class Diagram3](https://user-images.githubusercontent.com/75090467/105078753-be548c80-5a8e-11eb-9674-077dfeab4b34.jpg)
 
-## Autori
-* ##### Vitali Juri
-* ##### Sebastianelli Nicola
-* ##### Palladino Roberto
+### Diagramma delle sequenze
+
+* #### GET/metadata
+![Metadata Sequence Diagram](https://user-images.githubusercontent.com/75083712/105418371-4e383900-5c3d-11eb-8e01-63fc1f7ac770.jpg)
+
+* #### GET/data
+![Data Sequence Diagram](https://user-images.githubusercontent.com/75083712/105418443-7162e880-5c3d-11eb-9b7e-0c61402778ae.jpg)
+
+* #### GET/getId
+![getId sequence diagram](https://user-images.githubusercontent.com/75083712/105418479-7fb10480-5c3d-11eb-906d-c4a61d0e4e80.jpg)
+
+* #### POST/stats
+![stats sequence diagram](https://user-images.githubusercontent.com/75083712/105418512-8b043000-5c3d-11eb-9ce0-e8974619b431.jpg)
+
+* #### POST/liveTemp
+![liveTemp sequence diagram](https://user-images.githubusercontent.com/75083712/105418584-a8d19500-5c3d-11eb-804b-8668443d762b.jpg)
+
+* #### POST/cities
+![cities sequence diagram](https://user-images.githubusercontent.com/75083712/105418617-b71fb100-5c3d-11eb-8bdf-e6e52b5deec4.jpg)
+
+* #### POST/filterStats
+![statsFilter sequence diagram](https://user-images.githubusercontent.com/75083712/105418720-e0404180-5c3d-11eb-8810-7d3222bad38d.jpg)
+
+## **Autori**
+* ##### **Vitali Juri**
+* ##### **Sebastianelli Nicola**
+* ##### **Palladino Roberto**
